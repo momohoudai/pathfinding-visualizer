@@ -1,0 +1,19 @@
+.cell {
+    width: 25px;
+    height: 25px;
+    outline: 1px solid rgb(110, 220, 253);
+    display: inline-block;
+    vertical-align: top;
+}
+
+.cell-obstacle{
+    background-color: grey;
+}
+
+.cell-start {
+    background-color: orange;
+}
+
+.cell-end {
+    background-color: purple;
+}
