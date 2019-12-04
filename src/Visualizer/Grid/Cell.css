@@ -8,6 +8,15 @@
 
 .cell-obstacle{
     background-color: grey;
+    animation-name: paintToGrey;
+    animation-timing-function: ease-out;
+    animation-duration: 0.25s;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+
 }
 
 .cell-start {
@@ -16,4 +25,9 @@
 
 .cell-end {
     background-color: purple;
+}
+
+@keyframes paintToGrey {
+    from{background-color: white;}
+    to {background-color: grey;}
 }
