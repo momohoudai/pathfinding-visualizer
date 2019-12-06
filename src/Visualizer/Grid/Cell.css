@@ -21,13 +21,37 @@
 
 .cell-start {
     background-color: orange;
+    animation-name: paintToOrange;
+    animation-timing-function: ease-out;
+    animation-duration: 0.25s;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
 }
 
 .cell-end {
     background-color: purple;
+    animation-name: paintToPurple;
+    animation-timing-function: ease-out;
+    animation-duration: 0.25s;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
 }
 
 @keyframes paintToGrey {
     from{background-color: white;}
     to {background-color: grey;}
+}
+@keyframes paintToOrange {
+    from{background-color: white;}
+    to {background-color: orange;}
+}
+@keyframes paintToPurple {
+    from{background-color: white;}
+    to {background-color: purple;}
 }

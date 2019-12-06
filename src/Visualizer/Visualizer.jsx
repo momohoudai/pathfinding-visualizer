@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
-import Grid from './Grid/Grid'
+import GridComponent from './Grid/Grid'
 
 function Visualizer() {
+
+    const [mode, setMode] = useState(0)
+
     return (
         <div>
-            <Grid></Grid>
+            <div>
+                <button>Mode 1</button>
+                <button>Mode 2</button>
+                <button>Mode 3</button>
+            </div>
+            <GridComponent/>
         </div>
     )
 }

@@ -1,7 +1,14 @@
 import React, { memo, useState } from 'react';
 import './Cell.css'
 
-const Cell = ({row, col, type, onMouseDown}) => {
+export const CellTypes = {
+    NONE: 0,
+    OBSTACLE: 1,
+    START: 2,
+    END: 3
+}
+
+const Cell = ({row, col, type, onMouseDown, onMouseUp, onMouseEnter}) => {
 
     let extraClass = getExtraClassBasedOnType(type);
    
@@ -13,8 +20,12 @@ const Cell = ({row, col, type, onMouseDown}) => {
             key={`col-${row}-${col}`} 
             className={`cell ${extraClass}`}
             onMouseDown={()=>{onMouseDown(row, col)}}
+            onMouseUp={()=>{onMouseUp()}}
+            onMouseEnter={()=>{onMouseEnter(row, col)}}
         >
-         {console.log("rerendering!")}
+         {
+          //  console.log("rerendering!")
+         }
         </div>
     )
     
@@ -23,9 +34,9 @@ const Cell = ({row, col, type, onMouseDown}) => {
 
 function getExtraClassBasedOnType(type) {
     return (
-        type == 1 ? "cell-obstacle" :
-        type == 2 ? "cell-start" :
-        type == 3 ? "cell-end" : ""
+        type == CellTypes.OBSTACLE ? "cell-obstacle" :
+        type == CellTypes.START ? "cell-start" :
+        type == CellTypes.END ? "cell-end" : ""
     )
 }
 
@@ -33,7 +44,7 @@ function areEqual(prevProps, nextProps) {
     return (
         prevProps.row == nextProps.row &&
         prevProps.col == nextProps.col &&
-        prevProps.type == nextProps.type
+        prevProps.type == nextProps.type 
     )
 }
 
