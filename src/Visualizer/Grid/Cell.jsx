@@ -8,7 +8,7 @@ export const CellTypes = {
     END: 3
 }
 
-const Cell = ({row, col, type, onMouseDown, onMouseUp, onMouseEnter}) => {
+const Cell = ({row, col, type, dispatch}) => {
 
     let extraClass = getExtraClassBasedOnType(type);
    
@@ -19,12 +19,12 @@ const Cell = ({row, col, type, onMouseDown, onMouseUp, onMouseEnter}) => {
             id={`col-${row}-${col}`}
             key={`col-${row}-${col}`} 
             className={`cell ${extraClass}`}
-            onMouseDown={()=>{onMouseDown(row, col)}}
-            onMouseUp={()=>{onMouseUp()}}
-            onMouseEnter={()=>{onMouseEnter(row, col)}}
+            onMouseDown={()=>{dispatch({type: 'cellMouseDown', row: row, col: col})}}
+            onMouseUp={()=>{dispatch({type: 'cellMouseUp'})}}
+            onMouseEnter={()=>{dispatch({type: 'cellMouseEnter', row: row, col: col})}}
         >
          {
-          //  console.log("rerendering!")
+         ///   console.log("rerendering!")
          }
         </div>
     )

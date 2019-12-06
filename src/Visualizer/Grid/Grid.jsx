@@ -1,40 +1,44 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useReducer } from 'react';
 import './Grid.css'
 import Cell, { CellTypes } from './Cell'
 
 
-const GridComponent = ()=>{
-    const [grid, setGrid] = useState(createGrid(20, 50))
+
+const gridState = {
+    grid: createGrid(20, 50),
+    isMousePressed: false
+}
+
+const gridReducer = (state, action) => {
+    function paintCell(row, col) {
+        let newGrid = state.grid.slice();
+        newGrid[action.row][action.col].type = 1;
+        return newGrid;
+    }
+
+    switch(action.type) {
+        case "cellMouseDown":
+            return { grid: paintCell(action.row, action.col), isMousePressed: true };
+        case "cellMouseUp":
+            return {...state, isMousePressed: false}
+        case "cellMouseEnter":
+            if (state.isMousePressed) {
+                return { grid: paintCell(action.row, action.col), isMousePressed: true };
+            }
+            return {...state}
+        default:
+            throw new Error('unexpected action');
+    }
+}
+
+
+
+function GridComponent() {
+    const [state, dispatch] = useReducer(gridReducer, gridState);
     
-    // Good reference
-    // https://stackoverflow.com/questions/53845595/wrong-react-hooks-behaviour-with-event-listener
-    // I think that as long as I don't pass isMousePressed to my children, the integrity of the code
-    // is fine...? I just need all eventHandlers to reference the same isMousePressed variable.
-    var isMousePressed = useRef(false);
-
-    const paintCell = (row, col) => {
-        let newGrid = grid.slice();
-        newGrid[row][col].type = 1;
-        setGrid(newGrid);
-    }
-
-    const onCellMouseDown = (row, col) => {
-        paintCell(row, col);
-        isMousePressed.current = true;
-    }
-
-    const onCellMouseEnter = (row, col) => {
-        if (!isMousePressed.current) 
-            return;
-        paintCell(row, col);
-    }
-
-    const onCellMouseUp = () => {
-        isMousePressed.current = false;
-    }
     return (
         <div id="grid" className="grid">
-            {grid.map((rowObj, rowId) => {
+            {state.grid.map((rowObj, rowId) => {
                 return ( 
                     <div id={`row-${rowId}`} key={`row-${rowId}`}> 
                     {rowObj.map((colObj) => {
@@ -44,9 +48,7 @@ const GridComponent = ()=>{
                                 row={row} 
                                 col={col} 
                                 type={type} 
-                                onMouseDown={onCellMouseDown}
-                                onMouseUp={onCellMouseUp}
-                                onMouseEnter={onCellMouseEnter} 
+                                dispatch={dispatch}
                             />
                         )
                     })}
@@ -57,8 +59,7 @@ const GridComponent = ()=>{
     )
 }
 
-
-const createGrid = (rows, cols) => {
+function createGrid(rows, cols) {
     const grid = [];
     for (let r = 0; r < rows; ++r) {
         const currentRow = [];
@@ -70,13 +71,15 @@ const createGrid = (rows, cols) => {
     return grid;
 }
 
-const createNode = (row, col, type) => {
+
+function createNode(row, col, type) {
     return {
         row, 
         col,
         type
     };
 }
+
 
 
 export default GridComponent;
