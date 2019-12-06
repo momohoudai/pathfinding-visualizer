@@ -6,24 +6,25 @@ import Cell, { CellTypes } from './Cell'
 
 const gridState = {
     grid: createGrid(20, 50),
-    isMousePressed: false
+    isMousePressed: false,
+    mode: CellTypes.OBSTACLE
 }
 
-const gridReducer = (state, action) => {
+const gridReducer = (state, action, type) => {
     function paintCell(row, col) {
         let newGrid = state.grid.slice();
-        newGrid[action.row][action.col].type = 1;
+        newGrid[action.row][action.col].type = type;
         return newGrid;
     }
 
     switch(action.type) {
         case "cellMouseDown":
-            return { grid: paintCell(action.row, action.col), isMousePressed: true };
+            return { grid: paintCell(action.row, action.col, state.mode), isMousePressed: true };
         case "cellMouseUp":
             return {...state, isMousePressed: false}
         case "cellMouseEnter":
             if (state.isMousePressed) {
-                return { grid: paintCell(action.row, action.col), isMousePressed: true };
+                return { grid: paintCell(action.row, action.col, state.mode), isMousePressed: true };
             }
             return {...state}
         default:
@@ -35,7 +36,7 @@ const gridReducer = (state, action) => {
 
 function GridComponent() {
     const [state, dispatch] = useReducer(gridReducer, gridState);
-    
+
     return (
         <div id="grid" className="grid">
             {state.grid.map((rowObj, rowId) => {
