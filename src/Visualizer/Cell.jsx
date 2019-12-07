@@ -11,6 +11,14 @@ export const CellTypes = {
 
 const Cell = ({row, col}) => {
     
+    // Simulates forceRender() from the class version.
+    //
+    // Basically, this defines a state that is a simple int variable x
+    // In React, when a state changes, the component will rerender.
+    // This will create a function forceRender() that, when called, will
+    // force increment x by 1 -> thus changing the state -> thus 
+    // rerendering the component.
+    //
     let [, forceRender] = useReducer((x) => x + 1, 0)
     
     let context = useContext(VisualizerContext);
@@ -23,8 +31,21 @@ const Cell = ({row, col}) => {
     }, [forceRender]);
 
     const paintCell = () => {
-        cellData.type = 1;
-        cellData.forceRenderCallback();
+        switch(context.mode){
+            case CellTypes.OBSTACLE:
+            case CellTypes.NONE:
+                // Don't paint over start and ends
+                if (cellData.type === CellTypes.START || cellData.type === CellTypes.END)
+                    return;
+                cellData.type = context.mode;
+                cellData.forceRenderCallback();
+                break;
+            case CellTypes.START:
+                break;
+            case CellTypes.END:
+                break;
+        }
+        
     }
     
     
@@ -48,7 +69,6 @@ const Cell = ({row, col}) => {
             
         >
          {
-         ///   console.log("rerendering!")
          }
         </div>
     )
