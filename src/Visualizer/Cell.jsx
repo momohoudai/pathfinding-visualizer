@@ -1,4 +1,5 @@
-import React, { memo, useState } from 'react';
+import React, { useReducer, useContext, useEffect } from 'react';
+import { VisualizerContext } from './Visualizer'
 import './Cell.css'
 
 export const CellTypes = {
@@ -8,20 +9,43 @@ export const CellTypes = {
     END: 3
 }
 
-const Cell = ({row, col, type, dispatch}) => {
+const Cell = ({row, col}) => {
+    
+    let [, forceRender] = useReducer((x) => x + 1, 0)
+    
+    let context = useContext(VisualizerContext);
+    let cellData = context.grid[row][col];
+    let extraClass = getExtraClassBasedOnType(cellData.type);
+    
+    useEffect(() => {   
+        cellData.forceRenderCallback = forceRender;
+        return () => delete cellData.forceRenderCallback;
+    }, [forceRender]);
 
-    let extraClass = getExtraClassBasedOnType(type);
-   
-
+    const paintCell = () => {
+        cellData.type = 1;
+        cellData.forceRenderCallback();
+    }
+    
+    
     return (
        
         <div 
             id={`col-${row}-${col}`}
-            key={`col-${row}-${col}`} 
             className={`cell ${extraClass}`}
-            onMouseDown={()=>{dispatch({type: 'cellMouseDown', row: row, col: col})}}
-            onMouseUp={()=>{dispatch({type: 'cellMouseUp'})}}
-            onMouseEnter={()=>{dispatch({type: 'cellMouseEnter', row: row, col: col})}}
+            onMouseUp={() => {
+                context.isMousePressed = false;
+            }}
+            onMouseDown={() => {
+                paintCell();
+                context.isMousePressed = true;
+            }}
+            onMouseEnter={() => {
+                if (context.isMousePressed)
+                    paintCell();
+            }}
+
+            
         >
          {
          ///   console.log("rerendering!")
@@ -40,13 +64,6 @@ function getExtraClassBasedOnType(type) {
     )
 }
 
-function areEqual(prevProps, nextProps) {
-    return (
-        prevProps.row == nextProps.row &&
-        prevProps.col == nextProps.col &&
-        prevProps.type == nextProps.type 
-    )
-}
 
 
-export default memo(Cell, areEqual);
+export default Cell;

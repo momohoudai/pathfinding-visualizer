@@ -1,42 +1,26 @@
-import React, { useState, useRef, useReducer } from 'react';
+import React, { useState, createContext } from 'react';
 import './Visualizer.css'
 import Cell, { CellTypes } from './Cell'
 
-const visualizerState = {
-    grid: createGrid(20, 50),
-    isMousePressed: false,
-    mode: CellTypes.OBSTACLE
+const GRID_ROWS = 20;
+const GRID_COLS = 50;
+const START_ROW = 10;
+const START_COL = 10;
+const END_ROW = 10;
+const END_COL = 40;
+
+function VisualizerState() {
+    this.grid = createGrid(GRID_ROWS, GRID_COLS);
+    this.isMousePressed = false;
+    this.mode = CellTypes.OBSTACLE;
 }
 
-const visualizerReducer = (state, action) => {
-    function paintCell(row, col, type) {
-        let newGrid = state.grid.slice();
-        newGrid[row][col].type = type;
-        return newGrid;
-    }
-
-    switch(action.type) {
-        case "cellMouseDown":
-            return { ...state, grid: paintCell(action.row, action.col, state.mode), isMousePressed: true };
-        case "cellMouseUp":
-            return {...state, isMousePressed: false}
-        case "cellMouseEnter":
-            console.log(state)
-            if (state.isMousePressed) {
-                return { ...state, grid: paintCell(action.row, action.col, state.mode), isMousePressed: true };
-            }
-            return {...state}
-        default:
-            throw new Error('unexpected action');
-    }
-}
-
-
+export const VisualizerContext = createContext();
 
 function VisualizerComponent() {
-    const [state, dispatch] = useReducer(visualizerReducer, visualizerState);
-    
+    const [state] = useState(()=>new VisualizerState())
     return (
+        <VisualizerContext.Provider value={state}>
         <div id="grid" className="grid">
             {state.grid.map((rowObj, rowId) => {
                 return ( 
@@ -48,7 +32,6 @@ function VisualizerComponent() {
                                 row={row} 
                                 col={col} 
                                 type={type} 
-                                dispatch={dispatch}
                             />
                         )
                     })}
@@ -56,6 +39,7 @@ function VisualizerComponent() {
                 )
             })}
         </div>
+        </VisualizerContext.Provider>
     )
 }
 
@@ -64,7 +48,7 @@ function createGrid(rows, cols) {
     for (let r = 0; r < rows; ++r) {
         const currentRow = [];
         for ( let c = 0; c < cols; ++c) {
-            currentRow.push(createNode(r, c, 0));
+            currentRow.push(createCellData(r, c, 0));
         }
         grid.push(currentRow);
     }
@@ -72,11 +56,11 @@ function createGrid(rows, cols) {
 }
 
 
-function createNode(row, col, type) {
+function createCellData(row, col, type) {
     return {
-        row, 
-        col,
-        type
+        row: row, 
+        col: col,
+        type: type,
     };
 }
 
