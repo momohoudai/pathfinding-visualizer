@@ -56,12 +56,12 @@ const Cell = ({row, col}) => {
                 cellData.forceRenderCallback();
                 break;
             case CellTypes.END:
-                    if (context.endCell !== null) {
-                        context.endCell.type = CellTypes.NONE
-                        context.endCell.forceRenderCallback();
-                    }
-                    cellData.type = CellTypes.END;
-                    cellData.forceRenderCallback();
+                if (context.endCell !== null) {
+                    context.endCell.type = CellTypes.NONE
+                    context.endCell.forceRenderCallback();
+                }
+                cellData.type = CellTypes.END;
+                cellData.forceRenderCallback();
                 break;
         }
         
