@@ -30,6 +30,13 @@ const Cell = ({row, col}) => {
         return () => delete cellData.forceRenderCallback;
     }, [forceRender]);
 
+    // This is so that we can 'unpaint' start and end cell when it's updated.
+    if (cellData.type == CellTypes.START)
+        context.startCell = cellData;
+    else if (cellData.type == CellTypes.END)
+        context.endCell = cellData;
+    
+
     const paintCell = () => {
         switch(context.mode){
             case CellTypes.OBSTACLE:
@@ -41,8 +48,20 @@ const Cell = ({row, col}) => {
                 cellData.forceRenderCallback();
                 break;
             case CellTypes.START:
+                if (context.startCell !== null) {
+                    context.startCell.type = CellTypes.NONE
+                    context.startCell.forceRenderCallback();
+                }
+                cellData.type = CellTypes.START;
+                cellData.forceRenderCallback();
                 break;
             case CellTypes.END:
+                    if (context.endCell !== null) {
+                        context.endCell.type = CellTypes.NONE
+                        context.endCell.forceRenderCallback();
+                    }
+                    cellData.type = CellTypes.END;
+                    cellData.forceRenderCallback();
                 break;
         }
         
