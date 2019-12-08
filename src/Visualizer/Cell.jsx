@@ -3,10 +3,14 @@ import { VisualizerContext } from './Visualizer'
 import './Cell.css'
 
 export const CellTypes = {
+    MIN: 0,
+
     NONE: 0,
     OBSTACLE: 1,
     START: 2,
-    END: 3
+    END: 3,
+    
+    MAX: 3
 }
 
 const Cell = ({row, col}) => {
@@ -22,19 +26,19 @@ const Cell = ({row, col}) => {
     let [, forceRender] = useReducer((x) => x + 1, 0)
     
     let context = useContext(VisualizerContext);
-    let cellData = context.grid[row][col];
-    let extraClass = getExtraClassBasedOnType(cellData.type);
+    let cellState = context.cellStates[row][col];
+    let extraClass = getExtraClassBasedOnType(cellState.type);
     
     useEffect(() => {   
-        cellData.forceRenderCallback = forceRender;
-        return () => delete cellData.forceRenderCallback;
+        cellState.forceRenderCallback = forceRender;
+        return () => delete cellState.forceRenderCallback;
     }, [forceRender]);
 
     // This is so that we can 'unpaint' start and end cell when it's updated.
-    if (cellData.type == CellTypes.START)
-        context.startCell = cellData;
-    else if (cellData.type == CellTypes.END)
-        context.endCell = cellData;
+    if (cellState.type == CellTypes.START)
+        context.startCell = cellState;
+    else if (cellState.type == CellTypes.END)
+        context.endCell = cellState;
     
 
     const paintCell = () => {
@@ -42,26 +46,26 @@ const Cell = ({row, col}) => {
             case CellTypes.OBSTACLE:
             case CellTypes.NONE:
                 // Don't paint over start and ends
-                if (cellData.type === CellTypes.START || cellData.type === CellTypes.END)
+                if (cellState.type === CellTypes.START || cellState.type === CellTypes.END)
                     return;
-                cellData.type = context.mode;
-                cellData.forceRenderCallback();
+                cellState.type = context.mode;
+                cellState.forceRenderCallback();
                 break;
             case CellTypes.START:
                 if (context.startCell !== null) {
                     context.startCell.type = CellTypes.NONE
                     context.startCell.forceRenderCallback();
                 }
-                cellData.type = CellTypes.START;
-                cellData.forceRenderCallback();
+                cellState.type = CellTypes.START;
+                cellState.forceRenderCallback();
                 break;
             case CellTypes.END:
                 if (context.endCell !== null) {
                     context.endCell.type = CellTypes.NONE
                     context.endCell.forceRenderCallback();
                 }
-                cellData.type = CellTypes.END;
-                cellData.forceRenderCallback();
+                cellState.type = CellTypes.END;
+                cellState.forceRenderCallback();
                 break;
         }
         
