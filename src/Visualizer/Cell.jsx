@@ -3,14 +3,12 @@ import { VisualizerContext } from './Visualizer'
 import './Cell.css'
 
 export const CellTypes = {
-    MIN: 0,
-
     NONE: 0,
     OBSTACLE: 1,
     START: 2,
     END: 3,
-    
-    MAX: 3
+    VISITED: 4,
+    CONSIDERING: 5 // open_list
 }
 
 const Cell = ({row, col}) => {
@@ -30,14 +28,14 @@ const Cell = ({row, col}) => {
     let extraClass = getExtraClassBasedOnType(cellState.type);
     
     useEffect(() => {   
-        cellState.forceRenderCallback = forceRender;
-        return () => delete cellState.forceRenderCallback;
+        cellState.frc = forceRender;
+        return () => delete cellState.frc;
     }, [forceRender]);
 
     // This is so that we can 'unpaint' start and end cell when it's updated.
-    if (cellState.type == CellTypes.START)
+    if (cellState.type === CellTypes.START)
         context.startCell = cellState;
-    else if (cellState.type == CellTypes.END)
+    else if (cellState.type === CellTypes.END)
         context.endCell = cellState;
     
 
@@ -49,23 +47,25 @@ const Cell = ({row, col}) => {
                 if (cellState.type === CellTypes.START || cellState.type === CellTypes.END)
                     return;
                 cellState.type = context.mode;
-                cellState.forceRenderCallback();
+                cellState.frc();
                 break;
             case CellTypes.START:
                 if (context.startCell !== null) {
                     context.startCell.type = CellTypes.NONE
-                    context.startCell.forceRenderCallback();
+                    context.startCell.frc();
                 }
                 cellState.type = CellTypes.START;
-                cellState.forceRenderCallback();
+                cellState.frc();
                 break;
             case CellTypes.END:
                 if (context.endCell !== null) {
                     context.endCell.type = CellTypes.NONE
-                    context.endCell.forceRenderCallback();
+                    context.endCell.frc();
                 }
                 cellState.type = CellTypes.END;
-                cellState.forceRenderCallback();
+                cellState.frc();
+                break;
+            default:
                 break;
         }
         
@@ -101,9 +101,11 @@ const Cell = ({row, col}) => {
 
 function getExtraClassBasedOnType(type) {
     return (
-        type == CellTypes.OBSTACLE ? "cell-obstacle" :
-        type == CellTypes.START ? "cell-start" :
-        type == CellTypes.END ? "cell-end" : ""
+        type === CellTypes.OBSTACLE ? "cell-obstacle" :
+        type === CellTypes.START ? "cell-start" :
+        type === CellTypes.END ? "cell-end" : 
+        type === CellTypes.CONSIDERING ? "cell-considering" : 
+        type === CellTypes.VISITED ? "cell-visited" : ""
     )
 }
 
