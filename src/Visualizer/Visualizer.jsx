@@ -4,30 +4,45 @@ import Cell, { CellTypes } from './Cell'
 import Button from './Button'
 import astar from './algorithms/astar'
 
-const GRID_ROWS = 20;
-const GRID_COLS = 50;
-const START_ROW = 10;
-const START_COL = 10;
-const END_ROW = 10;
-const END_COL = 40;
-
-function VisualizerState() {
-    this.grid = createGrid(GRID_ROWS, GRID_COLS, START_ROW, START_COL, END_ROW, END_COL);
+function VisualizerState(
+    rows, cols, 
+    initial_start_row, initial_start_col, 
+    initial_end_row, initial_end_col
+) 
+{
+    this.grid = createGrid(rows, cols);
     this.isMousePressed = false;
     this.mode = CellTypes.OBSTACLE;
 
     // for start and end management
-    this.startCell = null;
-    this.endCell = null;
+    this.startRow = initial_start_row;
+    this.startCol = initial_start_col;
+    this.endRow = initial_end_row;
+    this.endCol = initial_end_col;
 
     // for button use
     this.buttonStates = createButtonStates();
 }
 
+VisualizerState.prototype.getStartCell = function() {
+    return this.grid[this.startRow][this.startCol];
+}
+VisualizerState.prototype.getEndCell = function() {
+    return this.grid[this.endRow][this.endCol];
+}
+VisualizerState.prototype.setStartCell = function(row, col) {
+    this.startRow = row;
+    this.startCol = col;
+}
+VisualizerState.prototype.setEndCell = function(row, col) {
+    this.endRow = row;
+    this.endCol = col;
+}
+
 export const VisualizerContext = createContext();
 
 function VisualizerComponent() {
-    const [state] = useState(()=>new VisualizerState())
+    const [state] = useState(()=>new VisualizerState(20, 50, 10, 10, 10, 40))
 
     return (
         <VisualizerContext.Provider value={state}>
@@ -36,7 +51,7 @@ function VisualizerComponent() {
             <div>
                 <button onClick={()=>{
                     console.log("animation started");
-                    let result = astar(state.grid, state.grid[START_ROW][START_COL], state.grid[END_ROW][END_COL])
+                    let result = astar(state.grid, state.getStartCell(), state.getEndCell())
                     
                     for(const visitedNode of result.visitedListInOrder) {
                         let cellState = state.grid[visitedNode.node.row][visitedNode.node.col];
@@ -63,13 +78,11 @@ function VisualizerComponent() {
                 {state.grid.map((rowObj, rowId) => {
                     return ( 
                         <div id={`row-${rowId}`} key={`row-${rowId}`}> 
-                        {rowObj.map((colObj) => {
-                            const {row, col, type} = colObj;
+                        {rowObj.map((colObj, colId) => {
                             return (
                                 <Cell 
-                                    row={row} 
-                                    col={col} 
-                                    type={type} 
+                                    row={rowId} 
+                                    col={colId} 
                                 />
                             )
                         })}
@@ -82,32 +95,18 @@ function VisualizerComponent() {
     )
 }
 
-function createGrid(rows, cols, startRow, startCol, endRow, endCol) {
+function createGrid(rows, cols) {
     const grid = [];
     for (let r = 0; r < rows; ++r) {
         const currentRow = [];
         for ( let c = 0; c < cols; ++c) {
-            if (r === startRow && c === startCol )
-                currentRow.push(createCellData(r, c, CellTypes.START));
-            else if (r === endRow && c === endCol)
-                currentRow.push(createCellData(r, c, CellTypes.END));
-            else
-                currentRow.push(createCellData(r, c, CellTypes.NONE));
+           currentRow.push(null)
         }
         grid.push(currentRow);
     }
     return grid;
 }
 
-function createCellData(row, col, type) {
-    return {
-        row: row, 
-        col: col,
-        type: type,
-        visited: false,
-        frc: ()=>{}
-    };
-}
 
 function createButtonStates() {
     const states = [];
