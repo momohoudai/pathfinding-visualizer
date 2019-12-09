@@ -29,7 +29,6 @@ function astar(grid, startCell, endCell) {
         let neighbours = getNeighbours(currentNode, grid, goalNode);
         
         for (const neighbour of neighbours) {
-            console.log(neighbour);
             // Ignore Obstacles
             if (neighbour.type === CellTypes.OBSTACLE)
                 continue;
