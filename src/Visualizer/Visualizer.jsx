@@ -12,7 +12,7 @@ const END_ROW = 10;
 const END_COL = 40;
 
 function VisualizerState() {
-    this.cellStates = createCellStates(GRID_ROWS, GRID_COLS);
+    this.grid = createGrid(GRID_ROWS, GRID_COLS, START_ROW, START_COL, END_ROW, END_COL);
     this.isMousePressed = false;
     this.mode = CellTypes.OBSTACLE;
 
@@ -36,10 +36,10 @@ function VisualizerComponent() {
             <div>
                 <button onClick={()=>{
                     console.log("animation started");
-                    let result = astar(state.cellStates, state.cellStates[START_ROW][START_COL], state.cellStates[END_ROW][END_COL])
+                    let result = astar(state.grid, state.grid[START_ROW][START_COL], state.grid[END_ROW][END_COL])
                     
-                    for(const visitedNode of result.openListAddedInOrder) {
-                        let cellState = state.cellStates[visitedNode.node.row][visitedNode.node.col];
+                    for(const visitedNode of result.visitedListInOrder) {
+                        let cellState = state.grid[visitedNode.node.row][visitedNode.node.col];
                         if( cellState.type === CellTypes.START || 
                             cellState.type === CellTypes.END ||
                             cellState.type === CellTypes.OBSTACLE)
@@ -60,7 +60,7 @@ function VisualizerComponent() {
                 <Button type={CellTypes.END} />
             </div>
             <div id="grid" className="grid">
-                {state.cellStates.map((rowObj, rowId) => {
+                {state.grid.map((rowObj, rowId) => {
                     return ( 
                         <div id={`row-${rowId}`} key={`row-${rowId}`}> 
                         {rowObj.map((colObj) => {
@@ -82,14 +82,14 @@ function VisualizerComponent() {
     )
 }
 
-function createCellStates(rows, cols) {
+function createGrid(rows, cols, startRow, startCol, endRow, endCol) {
     const grid = [];
     for (let r = 0; r < rows; ++r) {
         const currentRow = [];
         for ( let c = 0; c < cols; ++c) {
-            if (r === START_ROW && c === START_COL )
+            if (r === startRow && c === startCol )
                 currentRow.push(createCellData(r, c, CellTypes.START));
-            else if (r === END_ROW && c === END_COL)
+            else if (r === endRow && c === endCol)
                 currentRow.push(createCellData(r, c, CellTypes.END));
             else
                 currentRow.push(createCellData(r, c, CellTypes.NONE));
@@ -98,7 +98,6 @@ function createCellStates(rows, cols) {
     }
     return grid;
 }
-
 
 function createCellData(row, col, type) {
     return {

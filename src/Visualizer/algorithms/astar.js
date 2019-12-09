@@ -24,7 +24,7 @@ function astar(grid, startCell, endCell) {
 
        
         closedList.push(currentNode)
-        visitedListInOrder.push(createVisitedNodeState(neighbour, CellTypes.CONSIDERING));
+        visitedListInOrder.push(createVisitedNodeState(currentNode, CellTypes.CONSIDERING));
         
         let neighbours = getNeighbours(currentNode, grid, goalNode);
         

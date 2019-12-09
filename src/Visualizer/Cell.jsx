@@ -24,7 +24,7 @@ const Cell = ({row, col}) => {
     let [, forceRender] = useReducer((x) => x + 1, 0)
     
     let context = useContext(VisualizerContext);
-    let cellState = context.cellStates[row][col];
+    let cellState = context.grid[row][col];
     let extraClass = getExtraClassBasedOnType(cellState.type);
     
     useEffect(() => {   
