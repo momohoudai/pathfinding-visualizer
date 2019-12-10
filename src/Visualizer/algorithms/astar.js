@@ -27,23 +27,23 @@ function astar(grid, startCell, endCell) {
         visitedListInOrder.push(createVisitedNodeState(currentNode, CellTypes.VISITED));
         
         let neighbours = getNeighbours(currentNode, grid, goalNode);
-        
         for (const neighbour of neighbours) {
             // Ignore Obstacles
             if (neighbour.type === CellTypes.OBSTACLE)
                 continue;
-            if (closedList.find( node => neighbour.row === node.row && neighbour.col === node.col))
+            if (closedList.find( node => neighbour.row === node.row && neighbour.col === node.col)) {
                 continue;
+            }
             
-            let openNode = openList.find(node => neighbour.row === node.row && neighbour.col === node.col);
-            
+            let openNode = openList.find( node => neighbour.row === node.row && neighbour.col === node.col);
             if (!openNode) {
                 openList.push(neighbour)
+                
                 visitedListInOrder.push(createVisitedNodeState(neighbour, CellTypes.CONSIDERING));
             }
             else {
-                // Update if f score is lower
-                if (openNode.f() > neighbour.f()) {
+                // Update if f score is lower\
+                if (f(openNode) > f(neighbour)) {
                     openNode = neighbour;
                 }
             }
@@ -91,7 +91,7 @@ function removeLowestScoreNode(open) {
     for (let i = 1; i < open.length; ++i) {
         lowest = f(open[i]) < f(open[lowest]) ? i : lowest;
     }    
-    return open.splice(lowest)[0];
+    return open.splice(lowest, 1)[0];
 }
 
 function createNode(cell) {
@@ -117,6 +117,7 @@ function getNeighbours(node, grid, goalNode) {
         neighbour.g = parentNode.g + 1;
         neighbour.h = heuristic(neighbour, goalNode);
         neighbour.parent = parentNode;
+    
         return neighbour;
     }
 

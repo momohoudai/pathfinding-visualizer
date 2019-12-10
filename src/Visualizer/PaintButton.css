@@ -1,0 +1,66 @@
+.paintbutton {
+    width: 150px;
+    height: 25px;
+    
+    display: inline-block;
+    vertical-align: top;
+    padding: 8px;
+    margin: 8px;
+    background-color: rgb(25, 104, 107);
+    border-radius: 10px;
+}
+
+.paintbutton-selected {
+    background-color: rgb(39, 159, 163);
+}
+
+.paintbutton-text {
+    vertical-align: middle;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+    
+}
+
+.paintbutton-extra-none {
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 8px;
+    vertical-align: middle;
+    border-radius: 50%;
+}
+
+.paintbutton-extra-obstacle {
+    width: 20px;
+    height: 20px;
+    background-color: grey;
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 8px;
+    vertical-align: middle;
+    border-radius: 50%;
+}
+
+.paintbutton-extra-start {
+    width: 20px;
+    height: 20px;
+    background-color: orange;
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 8px;
+    vertical-align: middle;
+    border-radius: 50%;
+}
+
+.paintbutton-extra-end {
+    width: 20px;
+    height: 20px;
+    background-color: purple;
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 8px;
+    vertical-align: middle;
+    border-radius: 50%;
+}

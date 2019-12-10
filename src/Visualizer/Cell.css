@@ -94,7 +94,7 @@
     to {background-color: purple;}
 }
 @keyframes paintToVisited {
-    from{background-color: white;}
+    from{background-color: rgb(149, 181, 187);}
     to {background-color: rgb(38, 162, 184);}
 }
 @keyframes paintToConsidering {
@@ -103,6 +103,6 @@
 }
 
 @keyframes paintToPath {
-    from{background-color: white;}
+    from{background-color:rgb(38, 162, 184);}
     to {background-color:  rgb(66, 204, 47);}
 }

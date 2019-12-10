@@ -38,6 +38,49 @@ VisualizerState.prototype.setEndCell = function(row, col) {
     this.endRow = row;
     this.endCol = col;
 }
+VisualizerState.prototype.clearBoard = function() {
+    for (const row of this.grid) {
+        for (const col of row) {
+            if (isAny(col.type, [CellTypes.VISITED, CellTypes.CONSIDERING, CellTypes.PATH]))
+            {
+                col.type = CellTypes.NONE;
+                col.frc();
+            }
+        }
+    }
+}
+
+VisualizerState.prototype.animatePathfinding = function(speed, visitedListInOrder, solution) {
+    let accumulatedInterval = 0;
+    for(let i = 0; i < visitedListInOrder.length; ++i) {
+        let visitedNode = visitedListInOrder[i];
+        let cellState = this.grid[visitedNode.node.row][visitedNode.node.col];
+        accumulatedInterval += speed;
+    
+        if( isAny(cellState.type, [CellTypes.START, CellTypes.END, CellTypes.OBSTACLE]))
+            continue;
+        
+        setTimeout(() => {
+            cellState.type = visitedNode.type;
+            cellState.frc();    
+        }, accumulatedInterval);
+    }
+    
+    for(let i = 0; i < solution.length; ++i) {
+        let solutionNode = solution[i];
+        let cellState = this.grid[solutionNode.row][solutionNode.col];
+        if( isAny(cellState.type, [CellTypes.START, CellTypes.END, CellTypes.OBSTACLE]))
+           continue;
+           
+        accumulatedInterval += speed;
+        setTimeout(() => {
+            cellState.type = CellTypes.PATH;
+            cellState.frc(); 
+         }, accumulatedInterval)
+    
+    }
+}
+
 
 export const VisualizerContext = createContext();
 
@@ -50,38 +93,9 @@ function VisualizerComponent() {
  
             <div>
                 <button onClick={()=>{ 
+                    state.clearBoard();
                     const result = astar(state.grid, state.getStartCell(), state.getEndCell())
-                    const speed = 10;
-                    let accumulatedInterval = 0;
-                    for(let i = 0; i < result.visitedListInOrder.length; ++i) {
-                        let visitedNode = result.visitedListInOrder[i];
-                        let cellState = state.grid[visitedNode.node.row][visitedNode.node.col];
-                        accumulatedInterval += speed;
-
-                        if( isAny(cellState.type, [CellTypes.START, CellTypes.END, CellTypes.OBSTACLE]))
-                            continue;
-                        setTimeout(() => {
-                            cellState.type = visitedNode.type;
-                            cellState.frc();    
-                        }, accumulatedInterval)
-
-                    }
-
-                    for(let i = 0; i < result.solution.length; ++i) {
-                        let solutionNode = result.solution[i];
-                        let cellState = state.grid[solutionNode.row][solutionNode.col];
-                        if( isAny(cellState.type, [CellTypes.START, CellTypes.END, CellTypes.OBSTACLE]))
-                            continue;
-                        
-                        accumulatedInterval += speed;
-                        setTimeout(() => {
-                            cellState.type = CellTypes.PATH;
-                            cellState.frc(); 
-                        }, accumulatedInterval)
-
-                    }
-
-
+                    state.animatePathfinding(10, result.visitedListInOrder, result.solution);
                 }}>Animate!</button>
             </div>
             <div id="toolbox" className="toolbox">
@@ -110,6 +124,8 @@ function VisualizerComponent() {
         </VisualizerContext.Provider>
     )
 }
+
+
 
 function createGrid(rows, cols) {
     const grid = [];
