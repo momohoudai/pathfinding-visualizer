@@ -8,7 +8,8 @@ export const CellTypes = {
     START: 2,
     END: 3,
     VISITED: 4,
-    CONSIDERING: 5 // open_list
+    CONSIDERING: 5, // open_list
+    PATH: 6
 }
 
 function CellState(row, col, type, frc) {
@@ -106,6 +107,7 @@ function getExtraClassBasedOnType(type) {
         type === CellTypes.START ? "cell-start" :
         type === CellTypes.END ? "cell-end" : 
         type === CellTypes.CONSIDERING ? "cell-considering" : 
+        type === CellTypes.PATH ? "cell-path" : 
         type === CellTypes.VISITED ? "cell-visited" : ""
     )
 }

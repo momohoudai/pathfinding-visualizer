@@ -3,20 +3,23 @@ import { VisualizerContext } from './Visualizer'
 import './Button.css'
 import {CellTypes} from './Cell'
 
+function ButtonState(frc) {
+    this.frc = frc;
+}
+
 const Button = ({type}) => {
 
     let [, forceRender] = useReducer((x) => x + 1, 0)
     let context = useContext(VisualizerContext);
+    if(context.buttonStates[type] === null) {
+        context.buttonStates[type] = new ButtonState(forceRender);
+    }
+
     let buttonState = context.buttonStates[type];
     let extraClass = getExtraClassByType(type);
     let name = getNameByType(type)
     
     let selected = context.mode === type ? "button-selected" : "";
-
-    useEffect(() => {   
-        buttonState.frc = forceRender;
-        return () => delete buttonState.frc;
-    }, [forceRender]);
 
     return (
        

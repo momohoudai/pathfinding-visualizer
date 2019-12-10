@@ -24,7 +24,7 @@ function astar(grid, startCell, endCell) {
 
        
         closedList.push(currentNode)
-        visitedListInOrder.push(createVisitedNodeState(currentNode, CellTypes.CONSIDERING));
+        visitedListInOrder.push(createVisitedNodeState(currentNode, CellTypes.VISITED));
         
         let neighbours = getNeighbours(currentNode, grid, goalNode);
         
@@ -43,19 +43,31 @@ function astar(grid, startCell, endCell) {
             }
             else {
                 // Update if f score is lower
-                if (openNode.f() < neighbour.f()) 
+                if (openNode.f() > neighbour.f()) {
                     openNode = neighbour;
+                }
             }
         }
-            
-
     }
+
+    let solution = reconstructPath(solutionNode);
 
     return {
         visitedListInOrder,
-        solutionNode
-
+        solution
     };
+}
+
+function reconstructPath(solutionNode) {
+    let result = [];
+    let itr = solutionNode;
+    while(itr != null)
+    {
+        result.push(itr);
+        itr = itr.parent;
+    }
+
+    return result.reverse();
 }
 
 function createVisitedNodeState(node, type) {
@@ -75,8 +87,6 @@ function f(node) {
 
 
 function removeLowestScoreNode(open) {
-
-
     let lowest = 0;
     for (let i = 1; i < open.length; ++i) {
         lowest = f(open[i]) < f(open[lowest]) ? i : lowest;
@@ -104,7 +114,7 @@ function getNeighbours(node, grid, goalNode) {
     
     function getNeighbourNode(parentNode, cell, goalNode) {
         let neighbour = createNode(cell);
-        neighbour.g = node.g + 1;
+        neighbour.g = parentNode.g + 1;
         neighbour.h = heuristic(neighbour, goalNode);
         neighbour.parent = parentNode;
         return neighbour;
@@ -112,7 +122,6 @@ function getNeighbours(node, grid, goalNode) {
 
     if (node.row - 1 >= 0) {
         let cell = grid[node.row - 1][node.col];
-        
         neighbours.push(getNeighbourNode(node, cell, goalNode));
     }
     if (node.col - 1 >= 0) {

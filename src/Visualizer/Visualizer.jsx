@@ -49,21 +49,37 @@ function VisualizerComponent() {
         <div id="visualizer">
  
             <div>
-                <button onClick={()=>{
-                    console.log("animation started");
-                    let result = astar(state.grid, state.getStartCell(), state.getEndCell())
-                    
-                    for(const visitedNode of result.visitedListInOrder) {
+                <button onClick={()=>{ 
+                    const result = astar(state.grid, state.getStartCell(), state.getEndCell())
+                    const speed = 10;
+                    let accumulatedInterval = 0;
+                    for(let i = 0; i < result.visitedListInOrder.length; ++i) {
+                        let visitedNode = result.visitedListInOrder[i];
                         let cellState = state.grid[visitedNode.node.row][visitedNode.node.col];
-                        if( cellState.type === CellTypes.START || 
-                            cellState.type === CellTypes.END ||
-                            cellState.type === CellTypes.OBSTACLE)
+                        accumulatedInterval += speed;
+
+                        if( isAny(cellState.type, [CellTypes.START, CellTypes.END, CellTypes.OBSTACLE]))
                             continue;
-                        
-                        cellState.type = visitedNode.type;
-                        cellState.frc();
+                        setTimeout(() => {
+                            cellState.type = visitedNode.type;
+                            cellState.frc();    
+                        }, accumulatedInterval)
+
                     }
 
+                    for(let i = 0; i < result.solution.length; ++i) {
+                        let solutionNode = result.solution[i];
+                        let cellState = state.grid[solutionNode.row][solutionNode.col];
+                        if( isAny(cellState.type, [CellTypes.START, CellTypes.END, CellTypes.OBSTACLE]))
+                            continue;
+                        
+                        accumulatedInterval += speed;
+                        setTimeout(() => {
+                            cellState.type = CellTypes.PATH;
+                            cellState.frc(); 
+                        }, accumulatedInterval)
+
+                    }
 
 
                 }}>Animate!</button>
@@ -111,9 +127,16 @@ function createGrid(rows, cols) {
 function createButtonStates() {
     const states = [];
     for (let i = CellTypes.NONE; i <= CellTypes.END; ++i )
-        states.push({})
+        states.push(null);
     return states;
 }
 
+function isAny(x, arr) {
+    for (let element of arr) {
+        if (x === element)
+            return true;
+    }
+    return false;
+}
 
 export default VisualizerComponent;
