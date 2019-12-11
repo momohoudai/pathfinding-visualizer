@@ -1,4 +1,4 @@
-import React, { useReducer, useContext, useEffect } from 'react';
+import React, { useReducer, useContext } from 'react';
 import { VisualizerContext } from './Visualizer'
 import './PaintBar.css'
 import { CellTypes } from './Cell'

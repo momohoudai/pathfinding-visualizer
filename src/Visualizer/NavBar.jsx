@@ -1,4 +1,4 @@
-import React, { useReducer, useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { VisualizerContext } from './Visualizer'
 import astar from './algorithms/astar'
 import './NavBar.css'
@@ -6,8 +6,6 @@ import { CellTypes } from './Cell'
  
 const NavBar = () => {
     let context = useContext(VisualizerContext);
-    let paintModeText = getPaintModeText(context.mode);
-
     return (
         <div id="navbar" className="navbar">
             <a className="title">Commands</a>
