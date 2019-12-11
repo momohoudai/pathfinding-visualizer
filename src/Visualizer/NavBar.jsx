@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { VisualizerContext } from './Visualizer'
 import astar from './algorithms/astar'
 import './NavBar.css'
-import { CellTypes } from './Cell'
  
 const NavBar = () => {
     let context = useContext(VisualizerContext);
