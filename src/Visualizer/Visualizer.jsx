@@ -1,8 +1,8 @@
 import React, { useState, createContext } from 'react';
 import './Visualizer.css'
 import Cell, { CellTypes } from './Cell'
-import Button from './Button'
-import astar from './algorithms/astar'
+import NavBar from './NavBar'
+import PaintBar from './PaintBar'
 
 function VisualizerState(
     rows, cols, 
@@ -38,10 +38,21 @@ VisualizerState.prototype.setEndCell = function(row, col) {
     this.endRow = row;
     this.endCol = col;
 }
-VisualizerState.prototype.clearBoard = function() {
+VisualizerState.prototype.clearPath = function() {
     for (const row of this.grid) {
         for (const col of row) {
             if (isAny(col.type, [CellTypes.VISITED, CellTypes.CONSIDERING, CellTypes.PATH]))
+            {
+                col.type = CellTypes.NONE;
+                col.frc();
+            }
+        }
+    }
+}
+VisualizerState.prototype.clearBoard = function() {
+    for (const row of this.grid) {
+        for (const col of row) {
+            if (!isAny(col.type, [CellTypes.START, CellTypes.END]))
             {
                 col.type = CellTypes.NONE;
                 col.frc();
@@ -90,20 +101,8 @@ function VisualizerComponent() {
     return (
         <VisualizerContext.Provider value={state}>
         <div id="visualizer">
- 
-            <div>
-                <button onClick={()=>{ 
-                    state.clearBoard();
-                    const result = astar(state.grid, state.getStartCell(), state.getEndCell())
-                    state.animatePathfinding(10, result.visitedListInOrder, result.solution);
-                }}>Animate!</button>
-            </div>
-            <div id="toolbox" className="toolbox">
-                <Button type={CellTypes.NONE} />
-                <Button type={CellTypes.OBSTACLE} />
-                <Button type={CellTypes.START} />
-                <Button type={CellTypes.END} />
-            </div>
+            <NavBar/>
+            <PaintBar/>
             <div id="grid" className="grid">
                 {state.grid.map((rowObj, rowId) => {
                     return ( 

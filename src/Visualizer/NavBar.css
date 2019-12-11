@@ -1,0 +1,37 @@
+
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: white;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+}
+ 
+.navbar .clickable {
+  float: left;
+  padding: 14px 16px;
+}
+.navbar .clickable:hover {
+  color: red;
+  cursor: pointer;
+  color: white;
+}
+.navbar .selected {
+  background-color: aqua;
+  color: black;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn, .dropbtn:focus {
+   background-color: red;
+   cursor: pointer;
+}
+  
+
+.navbar .title {
+  float: left;
+  padding: 14px 16px;
+  width: 100px;
+  background-color: #444;
+}

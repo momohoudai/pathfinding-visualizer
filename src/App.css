@@ -8,8 +8,9 @@
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: rgb(73, 66, 163);
+  height: 80px;
   padding: 20px;
   color: white;
 }

@@ -1,0 +1,75 @@
+.paint-navbar {
+    overflow: hidden;
+    background-color: #333;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    
+}
+
+.paint-navbar .clickable {
+    float: left;
+    padding: 14px 16px;
+  
+}
+.paint-navbar .clickable:hover {
+  color: red;
+  cursor: pointer;
+}
+.paint-navbar .selected {
+  background-color: aqua;
+  color: black;
+}
+
+.paint-navbar .title {
+    float: left;
+    padding: 14px 16px;
+    width: 100px;
+    background-color: #444;
+}
+
+.paint-navbar .button-circle-obstacle {
+  width: 20px;
+  height: 20px;
+  background-color: grey;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 8px;
+  vertical-align: middle;
+  border-radius: 50%;
+}
+
+.paint-navbar .button-circle-start {
+  width: 20px;
+  height: 20px;
+  background-color: orange;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 8px;
+  vertical-align: middle;
+  border-radius: 50%;
+}
+
+.paint-navbar .button-circle-end {
+  width: 20px;
+  height: 20px;
+  background-color: purple;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 8px;
+  vertical-align: middle;
+  border-radius: 50%;
+}
+
+.paint-navbar .button-circle-none {
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 8px;
+  vertical-align: middle;
+  border-radius: 50%;
+}
