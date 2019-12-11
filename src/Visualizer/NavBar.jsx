@@ -29,13 +29,4 @@ const NavBar = () => {
 }
 
 
-function getPaintModeText(mode) {
-    return (
-        mode === CellTypes.NONE ? "None" :
-        mode === CellTypes.START ? "Start" :
-        mode === CellTypes.END ? "End" : 
-        mode === CellTypes.OBSTACLE ? "Obstacle" : ""
-    )
-}
-
 export default NavBar;
