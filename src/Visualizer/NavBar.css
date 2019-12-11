@@ -11,7 +11,7 @@
  
 .navbar .clickable {
   float: left;
-  padding: 14px 16px;
+  padding: 10px 16px;
 }
 .navbar .clickable:hover {
   color: red;
@@ -31,7 +31,7 @@
 
 .navbar .title {
   float: left;
-  padding: 14px 16px;
+  padding: 10px 16px;
   width: 100px;
   background-color: #444;
 }
