@@ -7,7 +7,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <h2>🍑 Momo's A* Pathfinding Visualizer 🍑</h2>
+          <h2>🍑 Momo's Pathfinding Visualizer 🍑</h2>
         </div>
         <VisualizerComponent/>
       </div>
