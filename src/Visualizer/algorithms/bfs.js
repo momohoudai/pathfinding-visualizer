@@ -5,16 +5,16 @@ import { CellTypes } from '../Cell'
 function bfs(grid, startRow, startCol, endRow, endCol) {
     let visitedListInOrder = [];
     let visitedNodes = [];
-    let stack = [];
+    let queue = [];
 
     let goalNode = createNode(grid[endRow][endCol]);
     let startNode = createNode(grid[startRow][startCol]);
 
-    stack.push(startNode);
+    queue.push(startNode);
 
     let solutionNode = null;
-    while (stack.length !== 0 && !solutionNode) {
-        let currentNode = stack.pop();
+    while (queue.length !== 0 && !solutionNode) {
+        let currentNode = queue.shift();
 
         if (!visitedNodes.find(visited => visited.row === currentNode.row && visited.col === currentNode.col)) {
             visitedNodes.push(currentNode);
@@ -31,7 +31,7 @@ function bfs(grid, startRow, startCol, endRow, endCol) {
                     solutionNode = neighbour;
                     break;
                 }
-                stack.push(neighbour);
+                queue.push(neighbour);
                 
                 visitedListInOrder.push(createVisitedNodeState(neighbour, CellTypes.CONSIDERING));
             }

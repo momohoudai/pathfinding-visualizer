@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { VisualizerContext } from './Visualizer'
-import astar from './algorithms/astar'
 import './NavBar.css'
  
 const NavBar = () => {
@@ -17,11 +16,7 @@ const NavBar = () => {
             }}>Clear Board</a>
 
 
-            <a className="clickable"  onClick={()=>{
-                context.clearPath();
-                const result = astar(context.grid, context.getStartCell(), context.getEndCell())
-                context.animatePathfinding(10, result.visitedListInOrder, result.solution);
-            }}>Animate</a>
+ 
         </div>
     )
     
