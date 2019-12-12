@@ -21,8 +21,6 @@ function VisualizerState(
     this.endRow = initial_end_row;
     this.endCol = initial_end_col;
 
-    // for button use
-    this.buttonStates = createButtonStates();
 }
 
 VisualizerState.prototype.getStartCell = function() {
