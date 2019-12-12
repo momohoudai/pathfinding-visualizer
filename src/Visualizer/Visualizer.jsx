@@ -20,7 +20,6 @@ function VisualizerState(
     this.startCol = initial_start_col;
     this.endRow = initial_end_row;
     this.endCol = initial_end_col;
-
 }
 
 VisualizerState.prototype.getStartCell = function() {
@@ -30,10 +29,19 @@ VisualizerState.prototype.getEndCell = function() {
     return this.grid[this.endRow][this.endCol];
 }
 VisualizerState.prototype.setCellType = function(row, col, type) {
-    this.startRow = row;
-    this.startCol = col;
     this.grid[row][col].type = type;
     this.grid[row][col].frc();
+}
+
+VisualizerState.prototype.setStartCell = function(row, col) {
+    this.startRow = row;
+    this.startCol = col;
+    this.setCellType(row, col, CellTypes.START);
+}
+VisualizerState.prototype.setEndCell = function(row, col) {
+    this.endRow = row;
+    this.endCol = col;
+    this.setCellType(row, col, CellTypes.END);
 }
 
 VisualizerState.prototype.clearPath = function() {

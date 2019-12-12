@@ -54,16 +54,16 @@ const Cell = ({row, col}) => {
             case CellTypes.START:
                 let startCell = context.getStartCell();
                 if (startCell !== null) {
-                    context.setCellType(startCell.row, startCell.col, CellTypes.START);
+                    context.setCellType(startCell.row, startCell.col, CellTypes.NONE);
                 }
-                context.setCellType(row, col, CellTypes.START);
+                context.setStartCell(row, col, CellTypes.START);
                 break;
             case CellTypes.END:
                 let endCell = context.getEndCell();
                 if (endCell !== null) {
-                    context.setCellType(endCell.row, endCell.col, CellTypes.START);
+                    context.setCellType(endCell.row, endCell.col, CellTypes.NONE);
                 }
-                context.setCellType(row, col, CellTypes.END);
+                context.setEndCell(row, col, CellTypes.END);
                 break;
             default:
                 break;
