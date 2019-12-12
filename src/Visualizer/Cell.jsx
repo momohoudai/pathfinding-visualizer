@@ -49,28 +49,21 @@ const Cell = ({row, col}) => {
             case CellTypes.NONE:
                 if (cellState.type === CellTypes.START || cellState.type === CellTypes.END)
                     return;
-                cellState.type = context.mode;
-                cellState.frc();
+                context.setCellType(cellState.row, cellState.col, context.mode);
                 break;
             case CellTypes.START:
                 let startCell = context.getStartCell();
                 if (startCell !== null) {
-                    startCell.type = CellTypes.NONE
-                    startCell.frc();
+                    context.setCellType(startCell.row, startCell.col, CellTypes.START);
                 }
-                context.setStartCell(row, col);
-                cellState.type = CellTypes.START;
-                cellState.frc();
+                context.setCellType(row, col, CellTypes.START);
                 break;
             case CellTypes.END:
                 let endCell = context.getEndCell();
                 if (endCell !== null) {
-                    endCell.type = CellTypes.NONE
-                    endCell.frc();
+                    context.setCellType(endCell.row, endCell.col, CellTypes.START);
                 }
-                context.setEndCell(row, col);
-                cellState.type = CellTypes.END;
-                cellState.frc();
+                context.setCellType(row, col, CellTypes.END);
                 break;
             default:
                 break;

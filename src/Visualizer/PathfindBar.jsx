@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { VisualizerContext } from './Visualizer'
-import astar from './algorithms/astar'
-import dfs from './algorithms/dfs' 
-import bfs from './algorithms/bfs' 
-import dijkstra from './algorithms/dijkstra'
+import astar from './pathfinding/astar'
+import dfs from './pathfinding/dfs' 
+import bfs from './pathfinding/bfs' 
+import dijkstra from './pathfinding/dijkstra'
 import './PathfindBar.css'
  
 const PathfindBar = () => {

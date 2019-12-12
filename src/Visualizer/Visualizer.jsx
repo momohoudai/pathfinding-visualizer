@@ -29,14 +29,13 @@ VisualizerState.prototype.getStartCell = function() {
 VisualizerState.prototype.getEndCell = function() {
     return this.grid[this.endRow][this.endCol];
 }
-VisualizerState.prototype.setStartCell = function(row, col) {
+VisualizerState.prototype.setCellType = function(row, col, type) {
     this.startRow = row;
     this.startCol = col;
+    this.grid[row][col].type = type;
+    this.grid[row][col].frc();
 }
-VisualizerState.prototype.setEndCell = function(row, col) {
-    this.endRow = row;
-    this.endCol = col;
-}
+
 VisualizerState.prototype.clearPath = function() {
     for (const row of this.grid) {
         for (const col of row) {
