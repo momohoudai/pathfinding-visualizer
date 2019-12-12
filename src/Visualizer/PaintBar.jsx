@@ -1,4 +1,4 @@
-import React, { useReducer, useContext } from 'react';
+import React, { useReducer, useContext, createContext, useState } from 'react';
 import { VisualizerContext } from './Visualizer'
 import './PaintBar.css'
 import { CellTypes } from './Cell'
@@ -6,22 +6,21 @@ import { CellTypes } from './Cell'
 function PaintBarState () {
     this.frc = [];
 }
+const PaintbarContext = createContext();
 
 const PaintBar = () => {
-    let context = useContext(VisualizerContext);
-    if (!context.paintBarState)
-    {
-        context.paintBarState = new PaintBarState()
-    }
+    let [state] = useState(()=>new PaintBarState())
     return (
-        <div id="navbar" className="paint-navbar">
-            <a className="title">Paint Mode</a>
-            <PaintBarButton type={CellTypes.NONE}/>
-            <PaintBarButton type={CellTypes.OBSTACLE}/>
-            <PaintBarButton type={CellTypes.START}/>
-            <PaintBarButton type={CellTypes.END}/>
-            
-        </div>
+        <PaintbarContext.Provider value={state}>
+            <div id="navbar" className="paint-navbar">
+                <a className="title">Paint Mode</a>
+                <PaintBarButton type={CellTypes.NONE}/>
+                <PaintBarButton type={CellTypes.OBSTACLE}/>
+                <PaintBarButton type={CellTypes.START}/>
+                <PaintBarButton type={CellTypes.END}/>
+                
+            </div>
+        </PaintbarContext.Provider>
     )
     
 }
@@ -29,9 +28,10 @@ const PaintBar = () => {
 // Component for handling button logic
 const PaintBarButton = ({type}) => {
     let context = useContext(VisualizerContext);
+    let paintBarContext = useContext(PaintbarContext);
     let [, forceRender] = useReducer((x) => x + 1, 0)
-    if (!context.paintBarState.frc[type]) {
-        context.paintBarState.frc[type] = forceRender;
+    if (!paintBarContext.frc[type]) {
+        paintBarContext.frc[type] = forceRender;
     }
 
     let name = getNameByType(type)
@@ -40,9 +40,9 @@ const PaintBarButton = ({type}) => {
     return (
         
         <a className={`clickable ${isSelected}`} onClick={()=>{
-            context.paintBarState.frc[context.mode]();
+            paintBarContext.frc[context.mode]();
             context.mode = type;
-            context.paintBarState.frc[context.mode]();
+            paintBarContext.frc[context.mode]();
         }}>
             <div className={circleClass}></div>{name}
         </a>

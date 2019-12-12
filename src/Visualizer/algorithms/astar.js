@@ -2,13 +2,13 @@ import { CellTypes } from '../Cell'
 
 
 
-function astar(grid, startCell, endCell) {
+function astar(grid, startRow, startCol, endRow, endCol) {
     let visitedListInOrder = [];
     let openList = [];
     let closedList = [];
 
-    let goalNode = createNode(endCell);
-    let startNode = createNode(startCell);
+    let goalNode = createNode(grid[endRow][endCol]);
+    let startNode = createNode(grid[startRow][startCol]);
     startNode.h = heuristic(startNode, goalNode);
 
     openList.push(startNode);

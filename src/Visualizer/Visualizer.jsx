@@ -3,6 +3,7 @@ import './Visualizer.css'
 import Cell, { CellTypes } from './Cell'
 import NavBar from './NavBar'
 import PaintBar from './PaintBar'
+import PathfindBar from './PathfindBar'
 
 function VisualizerState(
     rows, cols, 
@@ -102,6 +103,7 @@ function VisualizerComponent() {
         <VisualizerContext.Provider value={state}>
         <div id="visualizer">
             <NavBar/>
+            <PathfindBar/>
             <PaintBar/>
             <div id="grid" className="grid">
                 {state.grid.map((rowObj, rowId) => {

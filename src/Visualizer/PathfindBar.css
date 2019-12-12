@@ -1,0 +1,37 @@
+
+.pathfindbar {
+  overflow: hidden;
+  background-color: #333;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: white;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+}
+ 
+.pathfindbar .clickable {
+  float: left;
+  padding: 10px 16px;
+}
+.pathfindbar .clickable:hover {
+  color: red;
+  cursor: pointer;
+  color: white;
+}
+.pathfindbar .selected {
+  background-color: aqua;
+  color: black;
+}
+
+.pathfindbar a:hover, .dropdown:hover .dropbtn, .dropbtn:focus {
+   background-color: red;
+   cursor: pointer;
+}
+  
+
+.pathfindbar .title {
+  float: left;
+  padding: 10px 16px;
+  width: 100px;
+  background-color: #444;
+}
