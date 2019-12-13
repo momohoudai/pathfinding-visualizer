@@ -8,7 +8,7 @@ import './PathfindBar.css'
  
 const PathfindBar = () => {
     let context = useContext(VisualizerContext);
-    const speed = 5;
+    const speed = 10;
     return (
         <div id="pathfindbar" className="pathfindbar">
             <a className="title">Pathfind</a>

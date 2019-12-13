@@ -1,0 +1,23 @@
+import React, { useContext } from 'react';
+import { VisualizerContext } from './Visualizer'
+import './MazeBar.css'
+import recursiveDvision from './maze-generation/recursive-division'
+const MazeBar = () => {
+    let context = useContext(VisualizerContext);
+    const speed = 10;
+    return (
+        <div id="mazebar" className="mazebar">
+            <a className="title">Maze</a>
+            <a className="clickable" onClick={()=>{
+               context.clearObstacles();
+               let result = recursiveDvision(context.grid, 5, 5);
+               console.log(result);
+               context.animateMaze(speed, result)  
+            }}>Recursive Division</a>
+        </div>
+    )
+    
+}
+
+
+export default MazeBar;

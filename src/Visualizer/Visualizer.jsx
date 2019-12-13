@@ -4,6 +4,7 @@ import Cell, { CellTypes } from './Cell'
 import NavBar from './NavBar'
 import PaintBar from './PaintBar'
 import PathfindBar from './PathfindBar'
+import MazeBar from './MazeBar'
 
 function VisualizerState(
     rows, cols, 
@@ -66,6 +67,35 @@ VisualizerState.prototype.clearBoard = function() {
         }
     }
 }
+VisualizerState.prototype.clearObstacles = function() {
+    for (const row of this.grid) {
+        for (const col of row) {
+            if (isAny(col.type, [CellTypes.OBSTACLE]))
+            {
+                col.type = CellTypes.NONE;
+                col.frc();
+            }
+        }
+    }
+}
+
+VisualizerState.prototype.animateMaze = function(speed, nodesInOrder) {
+    let accumulatedInterval = 0;
+    for(let i = 0; i < nodesInOrder.length; ++i) {
+        let visitedNode = nodesInOrder[i];
+        let cellState = this.grid[visitedNode.row][visitedNode.col];
+
+        accumulatedInterval += speed;
+    
+        if( isAny(cellState.type, [CellTypes.START, CellTypes.END]))
+            continue;
+        
+        setTimeout(() => {
+            cellState.type = CellTypes.OBSTACLE;
+            cellState.frc();    
+        }, accumulatedInterval);
+    }
+}
 
 VisualizerState.prototype.animatePathfinding = function(speed, visitedListInOrder, solution) {
     let accumulatedInterval = 0;
@@ -108,6 +138,7 @@ function VisualizerComponent() {
         <VisualizerContext.Provider value={state}>
         <div id="visualizer">
             <NavBar/>
+            <MazeBar/>
             <PathfindBar/>
             <PaintBar/>
             <div id="grid" className="grid">

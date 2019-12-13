@@ -1,0 +1,37 @@
+
+.mazebar {
+  overflow: hidden;
+  background-color: #333;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: white;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+}
+ 
+.mazebar .clickable {
+  float: left;
+  padding: 10px 16px;
+}
+.mazebar .clickable:hover {
+  color: red;
+  cursor: pointer;
+  color: white;
+}
+.mazebar .selected {
+  background-color: aqua;
+  color: black;
+}
+
+.mazebar a:hover, .dropdown:hover .dropbtn, .dropbtn:focus {
+   background-color: red;
+   cursor: pointer;
+}
+  
+
+.mazebar .title {
+  float: left;
+  padding: 10px 16px;
+  width: 100px;
+  background-color: #444;
+}

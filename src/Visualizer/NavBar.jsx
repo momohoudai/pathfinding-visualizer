@@ -15,6 +15,9 @@ const NavBar = () => {
                 context.clearBoard();
             }}>Clear Board</a>
 
+            <a className="clickable"  onClick={()=>{
+                context.clearObstacles();
+            }}>Clear Obstacles</a>
 
  
         </div>
