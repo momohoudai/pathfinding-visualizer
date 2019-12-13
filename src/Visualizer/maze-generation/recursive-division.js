@@ -29,7 +29,7 @@ function recursiveDivision(grid, minWidth, minHeight) {
 
 
 function divide(grid, minWidth, minHeight, x, y, width, height, orientation, resultCellList) {
-    if (width < minWidth || height < minHeight)
+    if (width <= minWidth || height <= minHeight)
         return;
     
 
@@ -37,7 +37,7 @@ function divide(grid, minWidth, minHeight, x, y, width, height, orientation, res
 
     // start point of the wall
     let wx = x + (horizontal ? 0 : rand(width - minWidth));
-    let wy = y + (horizontal ? rand(height - minHeight) : 0);
+    let wy = y + (horizontal ? rand(height - minHeight)  : 0);
 
     // length of the wall
     let length = horizontal ? width : height;
@@ -60,7 +60,6 @@ function divide(grid, minWidth, minHeight, x, y, width, height, orientation, res
     let nw = horizontal ? width : wx - x + 1;
     let nh = horizontal ? wy - y + 1 : height;
     divide(grid, minWidth, minHeight, nx, ny, nw, nh, chooseOrientation(nw, nh), resultCellList); 
-
 
     /*nx = horizontal ? x : wx + 1
     ny = horizontal ? wy + 1 : y;
