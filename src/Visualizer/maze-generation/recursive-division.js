@@ -32,6 +32,8 @@ function divide(grid, sx, sy, ex, ey, resultCellList) {
             if (width < 2)
                 return;
             const wallY = Math.floor(rand(sy, ey)/2)*2;
+            if (wallY < sy)
+                wallY += 2;
             const holeX = Math.floor(rand(sx, ex)/2)*2 + 1;
 
             // add wall
@@ -59,6 +61,8 @@ function divide(grid, sx, sy, ex, ey, resultCellList) {
             if (height < 2)
                 return;
             const wallX = Math.floor(rand(sx, ex)/2)*2;
+            if (wallX < sx) 
+                wallX += 2;
             const holeY = Math.floor(rand(sy, ey)/2)*2 + 1;
 
             // add wall
