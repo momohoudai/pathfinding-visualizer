@@ -1,71 +1,90 @@
+//https://stackoverflow.com/questions/23530756/maze-recursive-division-algorithm-design/23530960
+
+
 const Orientation = {
     HORIZONTAL : true,
     VERTICAL : false
 }
 
+var holes = [];
+function recursiveDivision(grid) {
+    const resultCellList = [];
+    const width = grid[0].length
+    const height = grid.length
 
-function recursiveDivision(grid, minWidth, minHeight) {
-    let resultCellList = [];
-    let width = grid[0].length
-    let height = grid.length
-
-    // draw the initial border around the grid
-    /*for (let i = 0; i < width; ++i) resultCellsList.push(grid[0][i]); //top
-    for (let i = 0; i < height; ++i) resultCellsList.push(grid[i][width-1]); // right
-    for (let i = width - 1; i >= 0; --i) resultCellsList.push(grid[height-1][i]); // bottom
-    for (let i = height - 1; i >= 0; --i) resultCellsList.push(grid[i][0]);
-    */
-    
-    
-    
-
-
-    divide(grid, minWidth, minHeight, 0, 0, width, height, chooseOrientation(width, height), resultCellList );
-
+    divide(grid, 0, 0, width - 1, height - 1, resultCellList );
+    holes = [];
     return resultCellList;
 
 }
 
 
 
-function divide(grid, minWidth, minHeight, x, y, width, height, orientation, resultCellList) {
-    if (width <= minWidth || height <= minHeight)
-        return;
-    
+function divide(grid, sx, sy, ex, ey, resultCellList) {
+    const width = ex - sx;
+    const height = ey - sy
+    const horizontal = chooseOrientation(width, height) === Orientation.HORIZONTAL;
 
-    let horizontal = orientation == Orientation.HORIZONTAL;
+    switch (horizontal)
+    {
+        case Orientation.HORIZONTAL:
+        {
+            if (width < 2)
+                return;
+            const wallY = Math.floor(rand(sy, ey)/2)*2;
+            const holeX = Math.floor(rand(sx, ex)/2)*2 + 1;
 
-    // start point of the wall
-    let wx = x + (horizontal ? 0 : rand(width - minWidth));
-    let wy = y + (horizontal ? rand(height - minHeight)  : 0);
+            // add wall
+            for (let i = sx; i <= ex; ++i) {
+                if ( i === holeX ) {
+                    holes.push(grid[wallY][i]);
+                    continue;
+                }
+                resultCellList.push(grid[wallY][i]);
+                if (holes.find(h => h.row === wallY && h.col=== i)) {
+                    console.log("DANGER H");
+                    console.log({holeX, wallY})
+                    console.log({sx, sy, ex, ey, horizontal});
+                }
+                else {
+                    
+                }
+            }
+            divide(grid, sx, sy, ex, wallY - 1, resultCellList);
+            divide(grid, sx, wallY + 1, ex, ey, resultCellList);
+        }
+        break;
+        case Orientation.VERTICAL:
+        {
+            if (height < 2)
+                return;
+            const wallX = Math.floor(rand(sx, ex)/2)*2;
+            const holeY = Math.floor(rand(sy, ey)/2)*2 + 1;
 
-    // length of the wall
-    let length = horizontal ? width : height;
+            // add wall
+            for (let i = sy; i <= ey; ++i) {
+                if ( i === holeY ) {
+                    holes.push(grid[i][wallX]);
+                    continue;
+                }         
+                resultCellList.push(grid[i][wallX]);
+                if (holes.find(h => h.row === i && h.col=== wallX)) {
+                    console.log("DANGER V");
+                    console.log({wallX, holeY})
+                    console.log({sx, sy, ex, ey, horizontal});
+                }
+                else {
 
-    // hole on the wall
-    let hx = wx + (horizontal ? rand(width - 2) + 1 : 0)
-    let hy = wy + (horizontal ? 0 : rand(height - 2) + 1);
-
-    let dx = horizontal ? 1 : 0;
-    let dy = horizontal ? 0 : 1;
-
-    for(let i = 0; i < length; ++i, wx += dx, wy += dy) {
-        if (wx === hx && wy === hy)
-            continue;
-        resultCellList.push(grid[wy][wx]);
+                }
+                    
+            }
+            divide(grid, sx, sy, wallX - 1, ey, resultCellList);
+            divide(grid, wallX + 1, sy, ex, ey, resultCellList);
+        }
+        break;
     }
-
-    let nx = x;
-    let ny = y;
-    let nw = horizontal ? width : wx - x + 1;
-    let nh = horizontal ? wy - y + 1 : height;
-    divide(grid, minWidth, minHeight, nx, ny, nw, nh, chooseOrientation(nw, nh), resultCellList); 
-
-    /*nx = horizontal ? x : wx + 1
-    ny = horizontal ? wy + 1 : y;
-    nw = horizontal ? width : x + width - wx - 1;
-    nh = horizontal ? height : y + height - wy - 1;
-    divide(grid, minWidth, minHeight, nx, ny, nw, nh, chooseOrientation(nw, nh), resultCellList); */
+    
+  
 
 }
 
@@ -75,12 +94,13 @@ function chooseOrientation(width, height) {
     else if (height < width)
         return Orientation.VERTICAL;
     else {
-        return rand(2);
+        return rand(0, 1);
     }
 }
 
-function rand(num) {
-    return Math.floor(Math.random() * num);
+
+function rand(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 export default recursiveDivision;
