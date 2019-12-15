@@ -31,9 +31,16 @@ function divide(grid, sx, sy, ex, ey, resultCellList) {
         {
             if (width < 2)
                 return;
+
+            // Walls are on EVEN tiles
             const wallY = Math.floor(rand(sy, ey)/2)*2;
-            if (wallY < sy)
-                wallY += 2;
+
+            // This is for the case where sy is an odd number and you rolled sy,
+            // causing it to be sy - 1. Need to shift it back to the nearest even number
+            if (wallY < sy) 
+                wallY = sy + 1;
+
+            // Holes are on ODD tiles
             const holeX = Math.floor(rand(sx, ex)/2)*2 + 1;
 
             // add wall
@@ -56,13 +63,15 @@ function divide(grid, sx, sy, ex, ey, resultCellList) {
             divide(grid, sx, wallY + 1, ex, ey, resultCellList);
         }
         break;
+
+        // Basically do the same for vertical
         case Orientation.VERTICAL:
         {
             if (height < 2)
                 return;
             const wallX = Math.floor(rand(sx, ex)/2)*2;
             if (wallX < sx) 
-                wallX += 2;
+                wallX = sx + 1;
             const holeY = Math.floor(rand(sy, ey)/2)*2 + 1;
 
             // add wall
