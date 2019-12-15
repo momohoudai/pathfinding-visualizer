@@ -13,7 +13,7 @@ const PaintBar = () => {
     return (
         <PaintbarContext.Provider value={state}>
             <div id="navbar" className="paint-navbar">
-                <a className="title">Paint Mode</a>
+                <span className="title">Paint Mode</span>
                 <PaintBarButton type={CellTypes.NONE}/>
                 <PaintBarButton type={CellTypes.OBSTACLE}/>
                 <PaintBarButton type={CellTypes.START}/>
@@ -39,13 +39,13 @@ const PaintBarButton = ({type}) => {
     let isSelected = context.mode === type ? "selected" : "";
     return (
         
-        <a href="javascript:void(0)" className={`clickable ${isSelected}`} onClick={()=>{
+        <span className={`clickable ${isSelected}`} onClick={()=>{
             paintBarContext.frc[context.mode]();
             context.mode = type;
             paintBarContext.frc[context.mode]();
         }}>
             <div className={circleClass}></div>{name}
-        </a>
+        </span>
     )
 }
 

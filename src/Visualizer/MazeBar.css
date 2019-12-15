@@ -24,17 +24,8 @@
 }
 
   
-.mazebar a:link {
-  color: inherit;
-  text-decoration: none;
-}
 
-.mazebar a:visited {
-  color: inherit;
-  text-decoration: none;
-}
-
-.mazebar a:hover, .dropdown:hover .dropbtn, .dropbtn:focus {
+.mazebar span:hover, .dropdown:hover .dropbtn, .dropbtn:focus {
    background-color: red;
    cursor: pointer;
 }

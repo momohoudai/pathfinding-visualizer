@@ -18,25 +18,17 @@
   cursor: pointer;
   color: white;
 }
+
 .pathfindbar .selected {
   background-color: aqua;
   color: black;
 }
 
-.pathfindbar a:hover, .dropdown:hover .dropbtn, .dropbtn:focus {
+.pathfindbar span:hover {
    background-color: red;
    cursor: pointer;
 }
-  
-.pathfindbar a:link {
-  color: inherit;
-  text-decoration: none;
-}
 
-.pathfindbar a:visited {
-  color: inherit;
-  text-decoration: none;
-}
 
 .pathfindbar .title {
   float: left;

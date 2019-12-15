@@ -6,18 +6,18 @@ const NavBar = () => {
     let context = useContext(VisualizerContext);
     return (
         <div id="navbar" className="navbar">
-            <a href="javascript:void(0)" className="title">Commands</a>
+            <span className="title">Commands</span>
 
-            <a href="javascript:void(0)" className="clickable" onClick={()=>{
+            <span className="clickable" onClick={()=>{
                 context.clearPath();
-            }}>Clear Path</a>
-            <a href="javascript:void(0)" className="clickable"  onClick={()=>{
+            }}>Clear Path</span>
+            <span className="clickable"  onClick={()=>{
                 context.clearBoard();
-            }}>Clear Board</a>
+            }}>Clear Board</span>
 
-            <a href="javascript:void(0)" className="clickable"  onClick={()=>{
+            <span className="clickable"  onClick={()=>{
                 context.clearObstacles();
-            }}>Clear Obstacles</a>
+            }}>Clear Obstacles</span>
 
  
         </div>

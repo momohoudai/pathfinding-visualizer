@@ -11,27 +11,27 @@ const PathfindBar = () => {
     const speed = 10;
     return (
         <div id="pathfindbar" className="pathfindbar">
-            <a href="javascript:void(0)" className="title">Pathfind</a>
-            <a href="javascript:void(0)" className="clickable" onClick={()=>{
+            <span className="title">Pathfind</span>
+            <span className="clickable" onClick={()=>{
                  context.clearPath();
                  const result = dfs(context.grid, context.startRow, context.startCol, context.endRow, context.endCol)
                  context.animatePathfinding(speed, result.visitedListInOrder, result.solution);
-            }}>Depth First</a>
-            <a href="javascript:void(0)" className="clickable" onClick={()=>{
+            }}>Depth First</span>
+            <span className="clickable" onClick={()=>{
                  context.clearPath();
                  const result = bfs(context.grid, context.startRow, context.startCol, context.endRow, context.endCol)
                  context.animatePathfinding(speed, result.visitedListInOrder, result.solution);
-            }}>Breadth First</a>
-            <a href="javascript:void(0)" className="clickable" onClick={()=>{
+            }}>Breadth First</span>
+            <span className="clickable" onClick={()=>{
                  context.clearPath();
                  const result = dijkstra(context.grid, context.startRow, context.startCol, context.endRow, context.endCol)
                  context.animatePathfinding(speed, result.visitedListInOrder, result.solution);
-            }}>Dijkstra</a>
-            <a href="javascript:void(0)" className="clickable" onClick={()=>{
+            }}>Dijkstra</span>
+            <span className="clickable" onClick={()=>{
                  context.clearPath();
                  const result = astar(context.grid, context.startRow, context.startCol, context.endRow, context.endCol)
                  context.animatePathfinding(speed, result.visitedListInOrder, result.solution);
-            }}>A Star</a>
+            }}>A Star</span>
         </div>
     )
     
