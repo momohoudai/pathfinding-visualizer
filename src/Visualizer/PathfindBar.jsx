@@ -11,23 +11,23 @@ const PathfindBar = () => {
     const speed = 10;
     return (
         <div id="pathfindbar" className="pathfindbar">
-            <a href="/#" className="title">Pathfind</a>
-            <a href="/#" className="clickable" onClick={()=>{
+            <a href="javascript:void(0)" className="title">Pathfind</a>
+            <a href="javascript:void(0)" className="clickable" onClick={()=>{
                  context.clearPath();
                  const result = dfs(context.grid, context.startRow, context.startCol, context.endRow, context.endCol)
                  context.animatePathfinding(speed, result.visitedListInOrder, result.solution);
             }}>Depth First</a>
-            <a href="/#" className="clickable" onClick={()=>{
+            <a href="javascript:void(0)" className="clickable" onClick={()=>{
                  context.clearPath();
                  const result = bfs(context.grid, context.startRow, context.startCol, context.endRow, context.endCol)
                  context.animatePathfinding(speed, result.visitedListInOrder, result.solution);
             }}>Breadth First</a>
-            <a href="/#" className="clickable" onClick={()=>{
+            <a href="javascript:void(0)" className="clickable" onClick={()=>{
                  context.clearPath();
                  const result = dijkstra(context.grid, context.startRow, context.startCol, context.endRow, context.endCol)
                  context.animatePathfinding(speed, result.visitedListInOrder, result.solution);
             }}>Dijkstra</a>
-            <a href="/#" className="clickable" onClick={()=>{
+            <a href="javascript:void(0)" className="clickable" onClick={()=>{
                  context.clearPath();
                  const result = astar(context.grid, context.startRow, context.startCol, context.endRow, context.endCol)
                  context.animatePathfinding(speed, result.visitedListInOrder, result.solution);
