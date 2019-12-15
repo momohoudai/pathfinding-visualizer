@@ -6,14 +6,12 @@ const Orientation = {
     VERTICAL : false
 }
 
-var holes = [];
 function recursiveDivision(grid) {
     const resultCellList = [];
     const width = grid[0].length
     const height = grid.length
 
     divide(grid, 0, 0, width - 1, height - 1, resultCellList );
-    holes = [];
     return resultCellList;
 
 }
@@ -46,18 +44,10 @@ function divide(grid, sx, sy, ex, ey, resultCellList) {
             // add wall
             for (let i = sx; i <= ex; ++i) {
                 if ( i === holeX ) {
-                    holes.push(grid[wallY][i]);
                     continue;
                 }
                 resultCellList.push(grid[wallY][i]);
-                if (holes.find(h => h.row === wallY && h.col=== i)) {
-                    console.log("DANGER H");
-                    console.log({holeX, wallY})
-                    console.log({sx, sy, ex, ey, horizontal});
-                }
-                else {
-                    
-                }
+ 
             }
             divide(grid, sx, sy, ex, wallY - 1, resultCellList);
             divide(grid, sx, wallY + 1, ex, ey, resultCellList);
@@ -77,18 +67,9 @@ function divide(grid, sx, sy, ex, ey, resultCellList) {
             // add wall
             for (let i = sy; i <= ey; ++i) {
                 if ( i === holeY ) {
-                    holes.push(grid[i][wallX]);
                     continue;
                 }         
                 resultCellList.push(grid[i][wallX]);
-                if (holes.find(h => h.row === i && h.col=== wallX)) {
-                    console.log("DANGER V");
-                    console.log({wallX, holeY})
-                    console.log({sx, sy, ex, ey, horizontal});
-                }
-                else {
-
-                }
                     
             }
             divide(grid, sx, sy, wallX - 1, ey, resultCellList);
