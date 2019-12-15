@@ -7,8 +7,8 @@ const MazeBar = () => {
     const speed = 20;
     return (
         <div id="mazebar" className="mazebar">
-            <a href="javascript:void(0)" className="title">Maze</a>
-            <a href="javascript:void(0)" className="clickable" onClick={()=>{
+            <a href="/#" className="title">Maze</a>
+            <a href="/#" className="clickable" onClick={()=>{
                context.clearObstacles();
                let result = recursiveDvision(context.grid, 5, 5);
                context.animateMaze(speed, result)  
@@ -19,4 +19,4 @@ const MazeBar = () => {
 }
 
 
-export default MazeBar;
+export default MazeBar; 
