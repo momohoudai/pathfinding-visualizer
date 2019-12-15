@@ -39,7 +39,7 @@ const PaintBarButton = ({type}) => {
     let isSelected = context.mode === type ? "selected" : "";
     return (
         
-        <a className={`clickable ${isSelected}`} onClick={()=>{
+        <a href="javascript:void(0)" className={`clickable ${isSelected}`} onClick={()=>{
             paintBarContext.frc[context.mode]();
             context.mode = type;
             paintBarContext.frc[context.mode]();

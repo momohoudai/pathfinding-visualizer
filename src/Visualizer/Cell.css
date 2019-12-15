@@ -1,6 +1,6 @@
 .cell {
-    width: 25px;
-    height: 25px;
+    width: 2%;
+    padding-top: 2%;
     outline: 1px solid rgb(110, 220, 253);
     display: inline-block;
     vertical-align: top;
