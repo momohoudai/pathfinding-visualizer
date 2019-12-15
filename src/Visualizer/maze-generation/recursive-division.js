@@ -33,7 +33,7 @@ function divide(grid, sx, sy, ex, ey, resultCellList) {
                 return;
 
             // Walls are on EVEN tiles
-            const wallY = Math.floor(rand(sy, ey)/2)*2;
+            let wallY = Math.floor(rand(sy, ey)/2)*2;
 
             // This is for the case where sy is an odd number and you rolled sy,
             // causing it to be sy - 1. Need to shift it back to the nearest even number
@@ -41,7 +41,7 @@ function divide(grid, sx, sy, ex, ey, resultCellList) {
                 wallY = sy + 1;
 
             // Holes are on ODD tiles
-            const holeX = Math.floor(rand(sx, ex)/2)*2 + 1;
+            let holeX = Math.floor(rand(sx, ex)/2)*2 + 1;
 
             // add wall
             for (let i = sx; i <= ex; ++i) {
@@ -69,10 +69,10 @@ function divide(grid, sx, sy, ex, ey, resultCellList) {
         {
             if (height < 2)
                 return;
-            const wallX = Math.floor(rand(sx, ex)/2)*2;
+            let wallX = Math.floor(rand(sx, ex)/2)*2;
             if (wallX < sx) 
                 wallX = sx + 1;
-            const holeY = Math.floor(rand(sy, ey)/2)*2 + 1;
+            let holeY = Math.floor(rand(sy, ey)/2)*2 + 1;
 
             // add wall
             for (let i = sy; i <= ey; ++i) {
@@ -95,6 +95,8 @@ function divide(grid, sx, sy, ex, ey, resultCellList) {
             divide(grid, wallX + 1, sy, ex, ey, resultCellList);
         }
         break;
+        default:
+            break;
     }
     
   

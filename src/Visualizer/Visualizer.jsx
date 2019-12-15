@@ -177,13 +177,6 @@ function createGrid(rows, cols) {
 }
 
 
-function createButtonStates() {
-    const states = [];
-    for (let i = CellTypes.NONE; i <= CellTypes.END; ++i )
-        states.push(null);
-    return states;
-}
-
 function isAny(x, arr) {
     for (let element of arr) {
         if (x === element)
