@@ -1,15 +1,12 @@
-import { CellTypes } from '../Cell'
+import { CellTypes } from 'constants/cell-types'
 
-
-
-function astar(grid, startRow, startCol, endRow, endCol) {
+function dijkstra(grid, startRow, startCol, endRow, endCol) {
     let visitedListInOrder = [];
     let openList = [];
     let closedList = [];
 
     let goalNode = createNode(grid[endRow][endCol]);
     let startNode = createNode(grid[startRow][startCol]);
-    startNode.h = heuristic(startNode, goalNode);
 
     openList.push(startNode);
 
@@ -26,7 +23,7 @@ function astar(grid, startRow, startCol, endRow, endCol) {
         closedList.push(currentNode)
         visitedListInOrder.push(createVisitedNodeState(currentNode, CellTypes.VISITED));
         
-        let neighbours = getNeighbours(currentNode, grid, goalNode);
+        let neighbours = getNeighbours(currentNode, grid);
         for (const neighbour of neighbours) {
             // Ignore Obstacles
             if (neighbour.type === CellTypes.OBSTACLE)
@@ -42,8 +39,8 @@ function astar(grid, startRow, startCol, endRow, endCol) {
                 visitedListInOrder.push(createVisitedNodeState(neighbour, CellTypes.CONSIDERING));
             }
             else {
-                // Update if f score is lower\
-                if (f(openNode) > f(neighbour)) {
+                // Update if f score is lower
+                if (openNode.g > neighbour.g) {
                     openNode = neighbour;
                 }
             }
@@ -77,19 +74,11 @@ function createVisitedNodeState(node, type) {
     }
 }
 
-function heuristic(node, goalNode) {
-    return Math.abs(node.row - goalNode.row) + Math.abs(node.col - goalNode.col); 
-}
-
-function f(node) {
-    return node.g + node.h;
-}
-
 
 function removeLowestScoreNode(open) {
     let lowest = 0;
     for (let i = 1; i < open.length; ++i) {
-        lowest = f(open[i]) < f(open[lowest]) ? i : lowest;
+        lowest = open[i].g < open[lowest].g ? i : lowest;
     }    
     return open.splice(lowest, 1)[0];
 }
@@ -100,22 +89,20 @@ function createNode(cell) {
         col: cell.col,
         type: cell.type,
         g: 0,
-        h: 0,
         parent: null,
         visited: false
     }
 }
 
-function getNeighbours(node, grid, goalNode) {
+function getNeighbours(node, grid) {
     
     let neighbours = [];
     let maxCols = grid[0].length;
     let maxRows = grid.length;
     
-    function getNeighbourNode(parentNode, cell, goalNode) {
+    function getNeighbourNode(parentNode, cell) {
         let neighbour = createNode(cell);
         neighbour.g = parentNode.g + 1;
-        neighbour.h = heuristic(neighbour, goalNode);
         neighbour.parent = parentNode;
     
         return neighbour;
@@ -123,23 +110,23 @@ function getNeighbours(node, grid, goalNode) {
 
     if (node.row - 1 >= 0) {
         let cell = grid[node.row - 1][node.col];
-        neighbours.push(getNeighbourNode(node, cell, goalNode));
+        neighbours.push(getNeighbourNode(node, cell));
     }
     if (node.col - 1 >= 0) {
         let cell = grid[node.row][node.col - 1];
-        neighbours.push(getNeighbourNode(node, cell, goalNode));
+        neighbours.push(getNeighbourNode(node, cell));
     }
     if (node.row + 1 < maxRows) {
         let cell = grid[node.row + 1][node.col];
-        neighbours.push(getNeighbourNode(node, cell, goalNode));
+        neighbours.push(getNeighbourNode(node, cell));
     }
     if (node.col + 1 < maxCols) {
         let cell = grid[node.row][node.col + 1];
-        neighbours.push(getNeighbourNode(node, cell, goalNode));
+        neighbours.push(getNeighbourNode(node, cell));
     }
 
     return neighbours;
 }
 
 
-export default astar;
+export default dijkstra;

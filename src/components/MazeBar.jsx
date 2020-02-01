@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { VisualizerContext } from './Visualizer'
 import './MazeBar.css'
-import recursiveDvision from './maze-generation/recursive-division'
+import recursiveDvision from 'algorithms/maze-generation/recursive-division'
 const MazeBar = () => {
     let context = useContext(VisualizerContext);
     const speed = 20;

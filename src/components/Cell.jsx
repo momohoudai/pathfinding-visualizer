@@ -1,16 +1,8 @@
 import React, { useReducer, useContext } from 'react';
 import { VisualizerContext } from './Visualizer'
 import './Cell.css'
+import { CellTypes } from 'constants/cell-types'
 
-export const CellTypes = {
-    NONE: 0,
-    OBSTACLE: 1,
-    START: 2,
-    END: 3,
-    VISITED: 4,
-    CONSIDERING: 5, // open_list
-    PATH: 6
-}
 
 function CellState(row, col, type, frc) {
     this.row = row;

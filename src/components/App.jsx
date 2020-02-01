@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import VisualizerComponent from './Visualizer/Visualizer';
-
+import VisualizerComponent from './Visualizer';
 class App extends Component {
   render() {
     return (

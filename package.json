@@ -1,28 +1,36 @@
 {
   "name": "react-pathfinding-visualizer",
   "version": "1.0.0",
-  "private": true,
-  "dependencies": {
+  "description": "The project is up here! https://momodevelop.gitlab.io/react-pathfinding-visualizer/",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-react": "^7.8.3",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.4.2",
+    "html-webpack-plugin": "^3.2.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-scripts": "3.3.0"
+    "style-loader": "^1.1.3",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "build": "webpack --mode production",
+    "test": "webpack-dev-server --open --mode development"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/momodevelop/react-pathfinding-visualizer.git"
+  },
+  "keywords": [],
+  "author": "Gerald 'Momo' Wong <ramza88@gmail.com> (none :()",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/momodevelop/react-pathfinding-visualizer/issues"
+  },
+  "homepage": "https://gitlab.com/momodevelop/react-pathfinding-visualizer#readme"
 }

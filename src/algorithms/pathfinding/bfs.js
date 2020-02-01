@@ -1,4 +1,5 @@
-import { CellTypes } from '../Cell'
+import { CellTypes } from 'constants/cell-types'
+
 
 
 

@@ -1,10 +1,12 @@
 import React, { useState, createContext } from 'react';
 import './Visualizer.css'
-import Cell, { CellTypes } from './Cell'
+import Cell from './Cell'
 import NavBar from './NavBar'
 import PaintBar from './PaintBar'
 import PathfindBar from './PathfindBar'
 import MazeBar from './MazeBar'
+import { CellTypes } from 'constants/cell-types'
+
 
 function VisualizerState(
     rows, cols, 

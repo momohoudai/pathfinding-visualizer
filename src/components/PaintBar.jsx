@@ -1,7 +1,7 @@
 import React, { useReducer, useContext, createContext, useState } from 'react';
 import { VisualizerContext } from './Visualizer'
 import './PaintBar.css'
-import { CellTypes } from './Cell'
+import { CellTypes } from 'constants/cell-types'
  
 function PaintBarState () {
     this.frc = [];
