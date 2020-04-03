@@ -21,7 +21,7 @@ module.exports = {
       ]
     },
     resolve: {
-        extensions: ['html', '.js', '.jsx'],
+        extensions: ['html', '.js', '.jsx', '.css'],
         alias: {
             algorithms: path.resolve(__dirname, 'src/algorithms/'),
             constants: path.resolve(__dirname, 'src/constants/'),
