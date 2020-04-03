@@ -1,4 +1,4 @@
-import { CellTypes } from 'constants/cell-types'
+import { CellTypes } from 'constants/cell'
 
 
 
@@ -114,7 +114,7 @@ function getNeighbours(node, grid, goalNode) {
     
     function getNeighbourNode(parentNode, cell, goalNode) {
         let neighbour = createNode(cell);
-        neighbour.g = parentNode.g + 1;
+        neighbour.g = parentNode.g + cell.cost;
         neighbour.h = heuristic(neighbour, goalNode);
         neighbour.parent = parentNode;
     

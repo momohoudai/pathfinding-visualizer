@@ -42,6 +42,17 @@
   border-radius: 50%;
 }
 
+.paint-navbar .button-circle-difficult {
+  width: 20px;
+  height: 20px;
+  background-color: black;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 8px;
+  vertical-align: middle;
+  border-radius: 50%;
+}
+
 .paint-navbar .button-circle-start {
   width: 20px;
   height: 20px;

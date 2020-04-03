@@ -5,5 +5,7 @@ export const CellTypes = {
     END: 3,
     VISITED: 4,
     CONSIDERING: 5, // open_list
-    PATH: 6
+    PATH: 6,
 }
+
+export const DifficultCost = 5; 

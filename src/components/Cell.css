@@ -7,7 +7,6 @@
 }
 
 .cell-obstacle{
-    background-color: grey;
     animation-name: paintToObstacle;
     animation-timing-function: ease-out;
     animation-duration: 0.25s;
@@ -16,12 +15,16 @@
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
     animation-play-state: running;
-
 }
 
+.cell-difficult {
+    background-image: url("../assets/circle.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center; 
+}
 
 .cell-start {
-    background-color: orange;
     animation-name: paintToStart;
     animation-timing-function: ease-out;
     animation-duration: 0.25s;
@@ -33,7 +36,6 @@
 }
 
 .cell-end {
-    background-color: purple;
     animation-name: paintToEnd;
     animation-timing-function: ease-out;
     animation-duration: 0.25s;
@@ -45,7 +47,6 @@
 }
 
 .cell-visited {
-    background-color: rgb(38, 162, 184);
     animation-name: paintToVisited;
     animation-timing-function: ease-out;
     animation-duration: 0.25s;
@@ -57,7 +58,6 @@
 }
 
 .cell-considering {
-    background-color: rgb(149, 181, 187);
     animation-name: paintToConsidering;
     animation-timing-function: ease-out;
     animation-duration: 0.25s;
@@ -70,7 +70,6 @@
 
 
 .cell-path {
-    background-color: rgb(66, 204, 47);
     animation-name: paintToPath;
     animation-timing-function: ease-out;
     animation-duration: 0.25s;
@@ -81,10 +80,13 @@
     animation-play-state: running;
 }
 
+
 @keyframes paintToObstacle {
     from{background-color: white;}
     to {background-color: grey;}
 }
+
+
 @keyframes paintToStart {
     from{background-color: white;}
     to {background-color: orange;}
@@ -106,3 +108,4 @@
     from{background-color:rgb(38, 162, 184);}
     to {background-color:  rgb(66, 204, 47);}
 }
+

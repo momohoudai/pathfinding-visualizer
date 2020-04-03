@@ -1,4 +1,4 @@
-import { CellTypes } from 'constants/cell-types'
+import { CellTypes } from 'constants/cell'
 
 function dijkstra(grid, startRow, startCol, endRow, endCol) {
     let visitedListInOrder = [];
@@ -39,7 +39,6 @@ function dijkstra(grid, startRow, startCol, endRow, endCol) {
                 visitedListInOrder.push(createVisitedNodeState(neighbour, CellTypes.CONSIDERING));
             }
             else {
-                // Update if f score is lower
                 if (openNode.g > neighbour.g) {
                     openNode = neighbour;
                 }
@@ -101,10 +100,11 @@ function getNeighbours(node, grid) {
     let maxRows = grid.length;
     
     function getNeighbourNode(parentNode, cell) {
+       
         let neighbour = createNode(cell);
-        neighbour.g = parentNode.g + 1;
+        neighbour.g = parentNode.g + cell.cost;
         neighbour.parent = parentNode;
-    
+        
         return neighbour;
     }
 
@@ -124,7 +124,6 @@ function getNeighbours(node, grid) {
         let cell = grid[node.row][node.col + 1];
         neighbours.push(getNeighbourNode(node, cell));
     }
-
     return neighbours;
 }
 

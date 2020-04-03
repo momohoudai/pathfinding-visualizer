@@ -5,7 +5,7 @@ import NavBar from './NavBar'
 import PaintBar from './PaintBar'
 import PathfindBar from './PathfindBar'
 import MazeBar from './MazeBar'
-import { CellTypes } from 'constants/cell-types'
+import { CellTypes, DifficultCost } from 'constants/cell'
 
 
 function VisualizerState(
@@ -35,6 +35,14 @@ VisualizerState.prototype.setCellType = function(row, col, type) {
     this.grid[row][col].type = type;
     this.grid[row][col].frc();
 }
+
+VisualizerState.prototype.setCellIsDifficult = function(row, col, difficult) {
+    let cell = this.grid[row][col];
+    cell.difficult = difficult;
+    cell.cost = (difficult ? DifficultCost : 1);
+    this.grid[row][col].frc();
+}
+
 
 VisualizerState.prototype.setStartCell = function(row, col) {
     this.startRow = row;
@@ -72,9 +80,16 @@ VisualizerState.prototype.clearBoard = function() {
 VisualizerState.prototype.clearObstacles = function() {
     for (const row of this.grid) {
         for (const col of row) {
-            if (isAny(col.type, [CellTypes.OBSTACLE]))
-            {
+            if (isAny(col.type, [CellTypes.OBSTACLE, CellTypes.DIFFICULT])) {
                 col.type = CellTypes.NONE;
+                col.frc();
+            }
+            if (col.type == CellTypes.DIFFICULT_VISITED) {
+                col.type = CellTypes.VISITED;
+                col.frc();
+            }
+            if (col.type == CellTypes.DIFFICULT_CONSIDERING) {
+                col.type = CellTypes.CONSIDERING;
                 col.frc();
             }
         }
@@ -143,7 +158,7 @@ function VisualizerComponent() {
             <MazeBar/>
             <PathfindBar/>
             <PaintBar/>
-            <div id="grid" className="grid">
+            <div id="grid" key="grid" className="grid">
                 {state.grid.map((rowObj, rowId) => {
                     return ( 
                         <div id={`row-${rowId}`} key={`row-${rowId}`}> 

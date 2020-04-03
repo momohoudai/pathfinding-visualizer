@@ -1,7 +1,7 @@
 import React, { useReducer, useContext } from 'react';
 import { VisualizerContext } from './Visualizer'
 import './Cell.css'
-import { CellTypes } from 'constants/cell-types'
+import { CellTypes } from 'constants/cell'
 
 
 function CellState(row, col, type, frc) {
@@ -9,6 +9,8 @@ function CellState(row, col, type, frc) {
     this.col = col;
     this.type = type;
     this.frc = frc;
+    this.difficult = false;
+    this.cost = 1;
 }
 
 const Cell = ({row, col}) => {
@@ -32,15 +34,19 @@ const Cell = ({row, col}) => {
     }
        
     let cellState = context.grid[row][col];
-    let extraClass = getExtraClassBasedOnType(cellState.type);
-    
-
+    let extraClass = getExtraClassBasedOnType(cellState.type) + (cellState.difficult ? " cell-difficult" : "");
     const paintCell = () => {
         switch(context.mode){
+            case CellTypes.DIFFICULT:
+                context.setCellIsDifficult(cellState.row, cellState.col, true);
+                break;
             case CellTypes.OBSTACLE:
             case CellTypes.NONE:
                 if (cellState.type === CellTypes.START || cellState.type === CellTypes.END)
                     return;
+                if (cellState.difficult) {
+                    context.setCellIsDifficult(cellState.row, cellState.col, false);
+                }
                 context.setCellType(cellState.row, cellState.col, context.mode);
                 break;
             case CellTypes.START:
@@ -66,6 +72,7 @@ const Cell = ({row, col}) => {
     return (
         <div 
             id={`col-${row}-${col}`}
+            key={`col-${row}-${col}`}
             className={`cell ${extraClass}`}
             onMouseUp={() => {
                 context.isMousePressed = false;
@@ -79,9 +86,9 @@ const Cell = ({row, col}) => {
                     paintCell();
             }}
 
-            
         >
         </div>
+
     )
     
 }
