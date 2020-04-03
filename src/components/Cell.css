@@ -18,7 +18,7 @@
 }
 
 .cell-difficult {
-    background-image: url("../assets/circle.png");
+    background-image: url("../assets/circle.svg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center; 
