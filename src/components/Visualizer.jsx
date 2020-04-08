@@ -81,11 +81,8 @@ VisualizerState.prototype.clearBoard = function() {
 VisualizerState.prototype.clearObstacles = function() {
     for (const row of this.grid) {
         for (const col of row) {
-            if (isAny(col.type, [CellTypes.OBSTACLE])) {
+            if (isAny(col.type, [CellTypes.OBSTACLE]) || col.difficult) {
                 col.type = CellTypes.NONE;
-                col.frc();
-            }
-            if (col.difficult) {
                 col.difficult = false;
                 col.frc();
             }
