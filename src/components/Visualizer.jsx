@@ -72,6 +72,7 @@ VisualizerState.prototype.clearBoard = function() {
             if (!isAny(col.type, [CellTypes.START, CellTypes.END]))
             {
                 col.type = CellTypes.NONE;
+                col.difficult = false;
                 col.frc();
             }
         }
@@ -80,16 +81,12 @@ VisualizerState.prototype.clearBoard = function() {
 VisualizerState.prototype.clearObstacles = function() {
     for (const row of this.grid) {
         for (const col of row) {
-            if (isAny(col.type, [CellTypes.OBSTACLE, CellTypes.DIFFICULT])) {
+            if (isAny(col.type, [CellTypes.OBSTACLE])) {
                 col.type = CellTypes.NONE;
                 col.frc();
             }
-            if (col.type == CellTypes.DIFFICULT_VISITED) {
-                col.type = CellTypes.VISITED;
-                col.frc();
-            }
-            if (col.type == CellTypes.DIFFICULT_CONSIDERING) {
-                col.type = CellTypes.CONSIDERING;
+            if (col.difficult) {
+                col.difficult = false;
                 col.frc();
             }
         }
