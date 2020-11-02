@@ -23,6 +23,8 @@ function VisualizerState(
     this.startCol = initial_start_col;
     this.endRow = initial_end_row;
     this.endCol = initial_end_col;
+
+    this.animations = [];
 }
 
 VisualizerState.prototype.getStartCell = function() {
@@ -90,7 +92,15 @@ VisualizerState.prototype.clearObstacles = function() {
     }
 }
 
+VisualizerState.prototype.clearAnimations = function() {
+    for (let anime of this.animations){
+        clearTimeout(anime);
+    }
+}
+
+
 VisualizerState.prototype.animateMaze = function(speed, nodesInOrder) {
+    this.clearAnimations();
     let accumulatedInterval = 0;
     for(let i = 0; i < nodesInOrder.length; ++i) {
         let visitedNode = nodesInOrder[i];
@@ -101,14 +111,16 @@ VisualizerState.prototype.animateMaze = function(speed, nodesInOrder) {
         if( isAny(cellState.type, [CellTypes.START, CellTypes.END]))
             continue;
         
-        setTimeout(() => {
+        let anime = setTimeout(() => {
             cellState.type = CellTypes.OBSTACLE;
             cellState.frc();    
         }, accumulatedInterval);
+        this.animations.push(anime);
     }
 }
 
 VisualizerState.prototype.animatePathfinding = function(speed, visitedListInOrder, solution) {
+    this.clearAnimations();
     let accumulatedInterval = 0;
     for(let i = 0; i < visitedListInOrder.length; ++i) {
         let visitedNode = visitedListInOrder[i];
@@ -118,10 +130,11 @@ VisualizerState.prototype.animatePathfinding = function(speed, visitedListInOrde
         if( isAny(cellState.type, [CellTypes.START, CellTypes.END, CellTypes.OBSTACLE]))
             continue;
         
-        setTimeout(() => {
+        let anime = setTimeout(() => {
             cellState.type = visitedNode.type;
             cellState.frc();    
         }, accumulatedInterval);
+        this.animations.push(anime);
     }
     
     for(let i = 0; i < solution.length; ++i) {
@@ -131,10 +144,13 @@ VisualizerState.prototype.animatePathfinding = function(speed, visitedListInOrde
            continue;
            
         accumulatedInterval += speed;
-        setTimeout(() => {
+        let anime = setTimeout(() => {
             cellState.type = CellTypes.PATH;
             cellState.frc(); 
-         }, accumulatedInterval)
+        }, accumulatedInterval);
+        
+        this.animations.push(anime);
+         
     
     }
 }
