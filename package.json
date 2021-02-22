@@ -1,7 +1,7 @@
 {
   "name": "react-pathfinding-visualizer",
   "version": "1.0.0",
-  "description": "The project is up here! https://momodevelop.gitlab.io/react-pathfinding-visualizer/",
+  "description": "The project is up here! https://momodevelop.github.io/react-pathfinding-visualizer/",
   "main": "index.js",
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -24,15 +24,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/momodevelop/react-pathfinding-visualizer.git"
+    "url": "git+https://github.com/momodevelop/pathfinding-visualizer.git"
   },
   "keywords": [],
   "author": "Gerald 'Momo' Wong <ramza88@gmail.com> (none :()",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/momodevelop/react-pathfinding-visualizer/issues"
+    "url": "https://github.com/momodevelop/pathfinding-visualizer/issues"
   },
-  "homepage": "https://gitlab.com/momodevelop/react-pathfinding-visualizer#readme",
+  "homepage": "https://github.com/momodevelop/pathfinding-visualizer",
   "dependencies": {
     "url-loader": "^4.0.0"
   }
