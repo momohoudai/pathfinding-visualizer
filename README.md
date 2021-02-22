@@ -1,1 +1,1 @@
-The project is up here! https://momodevelop.gitlab.io/react-pathfinding-visualizer/
+The project is up here! https://momodevelop.github.io/pathfinding-visualizer/
