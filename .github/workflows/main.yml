@@ -28,7 +28,7 @@ jobs:
         run: npm update
       
       - name: Build production 
-        run: npm build
+        run: npm run-script build
 
       - name: Set public folder
         run: mv dist public
